@@ -1,2 +1,2 @@
 # bitComposers_prj
-卒業制作のプロジェクト
+Group_3 の卒業制作のプロジェクト
