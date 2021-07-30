@@ -1,4 +1,4 @@
-# bitComposers_prj
+# bitComposer_prj
 Group_3 の卒業制作のプロジェクト
 
 # 次の目的
