@@ -2,13 +2,12 @@
 
 ## プロジェクトの名前
 
-[BitComposer]
+[bitComposer]
 
-### 名前をつけた理由
+### 名前の由来
 
 - [機械で扱う情報の単位であるbitと作曲者の意味の英語を合わせた]
 - [音楽プロジェクトで人を驚かしたい。]
-- [名前をつけた理由その3]
 
 <div style="page-break-before:always">
 </div>
