@@ -2,6 +2,5 @@
 
 {% block content %}
     <p>今日は{{ time }}です。</p>
-    <h2>下からやりたいことを選んでください</h2>
-    <p><a href="{{ url_for(bc) }}">bit_composerで遊ぶ</a></p>
+    <p><a href="{{ url_for('bc') }}">bit_composerで遊ぶ</a></p>
 {% endblock %}
