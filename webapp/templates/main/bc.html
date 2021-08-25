@@ -1,17 +1,9 @@
-<!doctype html>
-<html class="bc">
-    <head>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="../static/style.css">
-        <title>bit composer</title>
-    </head>
-    <body>
-        <h1>Bit composer</h1>
-        <hr>
-        <form action="" method="POST">
-            <input type="file" name="midi" id="midi" required>
-            <input type="submit" value="決定">
+{% extends "base.html" %}
 
-        </form>
-    </body>
-</html>
+{% block content %}
+    <form action="" method="POST">
+        <input type="file" name="midi" id="midi" required>
+        <input type="submit" value="決定">
+
+    </form>
+{% endblock %}
