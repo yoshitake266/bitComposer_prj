@@ -16,7 +16,7 @@ def welcome():
 def bc():
     title = "bit composer"
     page_t = "bit composer"
-    return render_template('bc.html',title=title,page_title=page_t)
+    return render_template('main/bc.html',title=title,page_title=page_t)
 
 if __name__ == "__main__":
     app.run()
