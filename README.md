@@ -1,8 +1,8 @@
 # bitComposer_prj
-自動作曲システム
+自動作曲システムを作っています
 
-# WebApp
+## WebApp
 Flaskを使った自動作曲システム (開発中)
 
-# system_config
+## system_config
 システム構成図
