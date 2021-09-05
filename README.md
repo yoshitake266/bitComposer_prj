@@ -1,2 +1,11 @@
 # bitComposer_prj
-Group_3 の卒業制作のプロジェクト
+自動作曲システムを作っています
+
+## WebApp
+Flaskを使った自動作曲システム (開発中)
+
+## system_config
+システム構成図
+
+## inception_deck
+プロジェクトのインセプションデッキ
