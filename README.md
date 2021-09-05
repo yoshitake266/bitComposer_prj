@@ -6,3 +6,6 @@ Flaskを使った自動作曲システム (開発中)
 
 ## system_config
 システム構成図
+
+## inception_deck
+プロジェクトのインセプションデッキ
