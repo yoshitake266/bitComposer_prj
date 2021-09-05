@@ -1,2 +1,7 @@
 # bitComposer_prj
-Group_3 の卒業制作のプロジェクト
+自動作曲システム
+
+# WebApp
+Flaskを使った自動作曲システム (開発中)
+
+# 
