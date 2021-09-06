@@ -1,9 +1,17 @@
 .mainpage {
-    background-color: violet;
-    color: cyan;
+    background-color: cyan;
+    color: red;
 }
 
 .bc{
     background-color: magenta;
     color: darkblue;
+}
+
+h1{
+    text-align: center;
+}
+
+.img{
+    text-align: center;
 }
