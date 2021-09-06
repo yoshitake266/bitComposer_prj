@@ -1,17 +1,25 @@
 .mainpage {
     background-color: blue;
     color: violet;
+    text-align: center;
 }
 
 .bc{
     background-color: magenta;
     color: darkblue;
-}
-
-h1{
     text-align: center;
 }
 
-.img{
-    text-align: center;
+
+a {
+    color: gold;
+    text-decoration: none;
+}
+
+a:hover{
+    color: pink;
+}
+
+.bigsize{
+    font-size: 2em;
 }

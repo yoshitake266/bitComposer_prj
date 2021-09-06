@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <p class="img"><img src="../static/bit composer logo.png"></p>
-    <p>今日は{{ time }}です。</p>
-    <p><a href="{{ url_for('bc') }}">bit_composerで遊ぶ</a></p>
+    <div class="bigsize">
+        <p>今日は{{ time }}です。</p>
+        <p><img src="../static/bit composer logo.png"></p>
+        <p><a href="{{ url_for('bcmidi') }}">midiを読み込む</a></p>
+        <p><a href="{{ url_for('bckey') }}">鍵盤で作る</a></p>
+    </div>
 {% endblock %}
