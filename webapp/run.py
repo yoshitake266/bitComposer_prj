@@ -14,9 +14,9 @@ def welcome():
 
 @app.route('/main',methods=["GET","POST"])
 def bc():
-    title = "bit composer"
-    page_t = "bit composer"
-    return render_template('main/bc.html',title=title,page_title=page_t)
+    title = "bit composer(midi読み込み)"
+    page_t = "bit composer(midi読み込み)"
+    return render_template('main/bcmidi.html',title=title,page_title=page_t)
 
 if __name__ == "__main__":
     app.run()
