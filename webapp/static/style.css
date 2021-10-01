@@ -1,9 +1,25 @@
 .mainpage {
-    background-color: violet;
-    color: cyan;
+    background-color: blue;
+    color: violet;
+    text-align: center;
 }
 
 .bc{
     background-color: magenta;
     color: darkblue;
+    text-align: center;
+}
+
+
+a {
+    color: gold;
+    text-decoration: none;
+}
+
+a:hover{
+    color: pink;
+}
+
+.bigsize{
+    font-size: 2em;
 }
