@@ -1,12 +1,12 @@
 <!doctype html>
-<html class="bc">
+<html>
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="../../static/style.css">
+        <link rel="stylesheet" href="../static/css/bootstrap.css">
         <title>{{ title }}</title>
     </head>
-    <body>
-        <h1>{{ page_title }}</h1>
+    <body class="bg-success">
+        <h1 class="text-center text-danger">{{ page_title }}</h1>
         <hr>
         {% block content %}{% endblock %}
     </body>
