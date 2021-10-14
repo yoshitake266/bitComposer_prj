@@ -3,7 +3,7 @@
 
 ## WebApp
 Flaskを使った自動作曲システム (開発中)
-#### new: webサイトを作りましたwebappからどうぞ
+#### new: webサイトを作りました
 
 ## system_chart
 システム構成図
