@@ -1,4 +1,4 @@
-from flask import Flask,render_template
+from flask import Flask,render_template,send_from_directory
 from datetime import datetime
 
 ima = datetime.now()
@@ -23,6 +23,12 @@ def bckey():
     title = "キーボード打ち込み"
     page_t = "キーボード打ち込み"
     return render_template('main/bckey.html',title=title,page_title=page_t)
+
+@app.route("/result")
+def result():
+    title = "結果"
+    page_t = "結果"
+    return render_template('main/result.html',title=title,page_title=page_t)
 
 if __name__ == "__main__":
     app.run()
