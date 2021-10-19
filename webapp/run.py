@@ -1,9 +1,11 @@
-from flask import Flask,render_template
+from flask import Flask,render_template, request, redirect,send_from_directory
 from datetime import datetime
 
 ima = datetime.now()
 
+upload_folder = './uploads'
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = upload_folder
 
 @app.route('/')
 def welcome():
@@ -24,5 +26,12 @@ def bckey():
     page_t = "キーボード打ち込み"
     return render_template('main/bckey.html',title=title,page_title=page_t)
 
+@app.route('/output')
+def outputmp3():
+    title = "mp3再生"
+    page_t = "mp3再生"
+    return render_template('main/outputmp3.html',title=title,page_title=page_t)
+
+
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

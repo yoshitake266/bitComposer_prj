@@ -1,0 +1,73 @@
+#piano-container {
+    margin: 0 auto;
+    width: calc(100% - 40px);
+    height: 400px;
+    overflow: auto;
+}
+
+#piano-wrap * {            
+    box-sizing: border-box;
+    font-family: Arial;
+    user-select: none;
+}
+
+#piano-wrap {
+    margin: 0 auto;
+    height: 330px;
+    width: calc(46px * 18);
+    display: flex;
+    justify-content: center;
+}
+
+#piano-wrap > div {
+    position: relative;
+}
+
+.white-key {
+    width: 46px;
+    height: 320px;
+    background-color: white;
+    border: solid 1px black;
+    z-index: 1;
+    border-bottom: solid rgb(230, 230, 230) 20px;
+    box-shadow: 0 7px 3px 0 rgba(0, 0, 0, 0.3);
+    transition: 100ms;
+    color: black;
+}
+
+.white-key.pressing {
+    border-bottom: solid rgb(230, 230, 230) 5px;
+    border-left:solid rgb(109, 109, 76) 2px;
+    border-right:solid rgb(109, 109, 76) 2px;
+    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.black-key {
+    width: 24px;
+    height: 190px;
+    background: linear-gradient(to bottom, rgb(24, 24, 24) 97%, white);
+    margin-left: -12px;
+    margin-right: -12px;
+    z-index: 2;
+    border-bottom: solid rgb(54, 54, 54) 10px;
+    border-left: solid black 3px;
+    border-right: solid black 3px;
+    box-shadow: 5px 1px 2px 0 rgba(0, 0, 0, 0.4);
+    transition: 100ms;
+    color: white;
+    text-align: center;
+}
+
+.black-key.pressing {
+    border-bottom: solid rgb(54, 54, 54) 4px;
+    box-shadow: 2px 1px 2px 0 rgba(0, 0, 0, 0.4);
+    background: linear-gradient(to bottom, rgb(24, 24, 24) 100%, white);
+}
+
+.key-label {
+    position: absolute;
+    display: block;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+}
