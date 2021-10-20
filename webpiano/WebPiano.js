@@ -1,25 +1,21 @@
 // 変数宣言
 const path = "audio"             // オーディオファイルのパス
 const keyMap = [
-    { pcKey: "1", pianoKey: 0 },{pcKey: "A", pianoKey: 1 },
-    { pcKey: "X", pianoKey: 2 },{ pcKey: "S", pianoKey: 3 },
-    { pcKey: "4", pianoKey: 4 },{ pcKey: "G", pianoKey: 5 },
-    { pcKey: "5", pianoKey: 6 },{ pcKey: "t", pianoKey: 7 },
-    { pcKey: "y", pianoKey: 8 },{ pcKey: "7", pianoKey: 9 },
-    { pcKey: "u", pianoKey: 10 },{ pcKey: "8", pianoKey: 11 },
-    { pcKey: "i", pianoKey: 12 },{ pcKey: "9", pianoKey: 13 },
-    { pcKey: "o", pianoKey: 14 },{ pcKey: "p", pianoKey: 15 },
-    { pcKey: "-", pianoKey: 16 },{ pcKey: "@", pianoKey: 17 },
-    { pcKey: "^", pianoKey: 18 },{ pcKey: "[", pianoKey: 19 },
-    { pcKey: "z", pianoKey: 12 },{ pcKey: "s", pianoKey: 13 },
-    { pcKey: "x", pianoKey: 14 },{ pcKey: "c", pianoKey: 15 },
-    { pcKey: "f", pianoKey: 16 },{ pcKey: "v", pianoKey: 17 },
-    { pcKey: "g", pianoKey: 18 },{ pcKey: "b", pianoKey: 19 },
-    { pcKey: "n", pianoKey: 20 },{ pcKey: "j", pianoKey: 21 },
-    { pcKey: "m", pianoKey: 22 },{ pcKey: "k", pianoKey: 23 },
-    { pcKey: ",", pianoKey: 24 },{ pcKey: "l", pianoKey: 25 },
-    { pcKey: ".", pianoKey: 26 },{ pcKey: "/", pianoKey: 27 },
-    { pcKey: ":", pianoKey: 28 },{ pcKey: "\\", pianoKey: 29 }
+    { pcKey: "a", pianoKey: 0 },{pcKey: "q", pianoKey: 1 },
+    { pcKey: "s", pianoKey: 2 },{ pcKey: "d", pianoKey: 3 },
+    { pcKey: "w", pianoKey: 4 },{ pcKey: "f", pianoKey: 5 },
+    { pcKey: "e", pianoKey: 6 },{ pcKey: "g", pianoKey: 7 },
+    { pcKey: "h", pianoKey: 8 },{ pcKey: "r", pianoKey: 9 },
+    { pcKey: "j", pianoKey: 10 },{ pcKey: "t", pianoKey: 11 },
+    { pcKey: "k", pianoKey: 12 },{ pcKey: "y", pianoKey: 13 },
+    { pcKey: "l", pianoKey: 14 },{ pcKey: ";", pianoKey: 15 },
+    { pcKey: "u", pianoKey: 16 },{ pcKey: "z", pianoKey: 17 },
+    { pcKey: "i", pianoKey: 18 },{ pcKey: "x", pianoKey: 19 },
+    { pcKey: "c", pianoKey: 20 },{ pcKey: "o", pianoKey: 21 },
+    { pcKey: "v", pianoKey: 22 },{ pcKey: "p", pianoKey: 23 },
+    { pcKey: "b", pianoKey: 24 },{ pcKey: "@", pianoKey: 25 },
+    { pcKey: "n", pianoKey: 26 },{ pcKey: "m", pianoKey: 27 },
+    { pcKey: "[", pianoKey: 28 },{ pcKey: ",", pianoKey: 29 }
 ]                                   // PCキーとピアノ鍵盤番号の紐づけ
 const pianoSounds = []              // Audioオブジェクト        
 const touchKeyNumlist = []          // タッチ中の鍵盤番号リスト
@@ -31,12 +27,11 @@ intervalIds.fill(null)              // 初期値 = null
 const pianoWrap = document.getElementById("piano-wrap")     // 鍵盤全体
 const whiteKeys = document.querySelectorAll(".white-key")   // 白鍵
 const blackKeys = document.querySelectorAll(".black-key")   // 黒鍵
-const note = ["A2","A#2","B2","C3","C#3","D3","D#3","E3","F3","F#3","G3","G#3","A3","A#3","B3","C4","C#4","D4","D#4","E4","F4","F#4","G4","G#4","A4","A#4","B4","C5","C#5","D5"]
 
 // 初期処理
 // Audioオブジェクトを作成セット
-for ( var i of note){
-    let sound = new Audio( path + i + ".wav" )
+for ( i = 0; i <= 29; i++ ){
+    let sound = new Audio( path + i + ".mp3" )
     sound.volume = 0
     pianoSounds.push(sound)
 }
