@@ -1,4 +1,4 @@
-# bitComposer_prj
+# bit composer
 - 入力された短いメロディから続きをゲーム音楽風に作曲します。
 
 ## WebApp
