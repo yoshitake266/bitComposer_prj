@@ -1,7 +1,6 @@
 // 変数宣言
 const path = "audio/"             // オーディオファイルのパス
 const keyMap = [
-
     { pcKey: "a", pianoKey: 0 },
     { pcKey: "q", pianoKey: 1 },
     { pcKey: "s", pianoKey: 2 },
@@ -32,24 +31,6 @@ const keyMap = [
     { pcKey: "m", pianoKey: 27 },
     { pcKey: "[", pianoKey: 28 },
     { pcKey: "/", pianoKey: 29 },
-
-
-//     { pcKey: "a", pianoKey: 0 },{pcKey: "q", pianoKey: 1 },
-//     { pcKey: "s", pianoKey: 2 },{ pcKey: "d", pianoKey: 3 },
-//     { pcKey: "w", pianoKey: 4 },{ pcKey: "f", pianoKey: 5 },
-//     { pcKey: "e", pianoKey: 6 },{ pcKey: "g", pianoKey: 7 },
-//     { pcKey: "h", pianoKey: 8 },{ pcKey: "r", pianoKey: 9 },
-//     { pcKey: "j", pianoKey: 10 },{ pcKey: "t", pianoKey: 11 },
-//     { pcKey: "k", pianoKey: 12 },{ pcKey: "y", pianoKey: 13 },
-//     { pcKey: "l", pianoKey: 14 },{ pcKey: ";", pianoKey: 15 },
-//     { pcKey: "u", pianoKey: 16 },{ pcKey: "z", pianoKey: 17 },
-//     { pcKey: "i", pianoKey: 18 },{ pcKey: "x", pianoKey: 19 },
-//     { pcKey: "c", pianoKey: 20 },{ pcKey: "o", pianoKey: 21 },
-//     { pcKey: "v", pianoKey: 22 },{ pcKey: "p", pianoKey: 23 },
-//     { pcKey: "b", pianoKey: 24 },{ pcKey: "@", pianoKey: 25 },
-//     { pcKey: "n", pianoKey: 26 },{ pcKey: "m", pianoKey: 27 },
-//     { pcKey: "[", pianoKey: 28 },{ pcKey: ",", pianoKey: 29 }
-
 ]                                   // PCキーとピアノ鍵盤番号の紐づけ
 const pianoSounds = []              // Audioオブジェクト        
 const touchkeyNumlish = []          // タッチ中の鍵盤番号リスト
@@ -70,7 +51,7 @@ for (var no of note){
 
 }
 for ( i = 0; i <= 29; i++ ){
-    let sound = new Audio( value + i + ".wav" )
+    let sound = new Audio( path + i + ".wav" )
 
 // const note = ["A2","A#2","B2","C3","C#3","D3","D#3","E3","F3","F#3","G3","G#3","A3","A#3","B3","C4","C#4","D4","D#4","E4","F4","F#4","G4","G#4","A4","A#4","B4","C5","C#5","D5"]
 
@@ -130,7 +111,9 @@ function handleTouchEvents(event){
         event.preventDefault();
     }
     const BeforeKeyNumllish = JSON.parse(JSON.stringify(touchkeyNumlish)) 
+    console.log(BeforeKeyNumllish)
     touchKeyNullish.length = 0
+
     // 各接触ポイントから押下中の鍵盤番号リストを作成
     for ( let i = 0; i < event.touches.length; i++ ){
         const x = event.touches[i].pageX 
