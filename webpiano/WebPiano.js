@@ -1,5 +1,5 @@
 // 変数宣言
-const path = "audio/"             // オーディオファイルのパス
+const path = "audio"             // オーディオファイルのパス
 const keyMap = [
     { pcKey: "a", pianoKey: 0 },
     { pcKey: "q", pianoKey: 1 },
@@ -43,26 +43,15 @@ const pianoWrap = document.getElementById("piano-wrap")     // 鍵盤全体
 const whiteKeys = document.querySelectorAll(".white-key")   // 白鍵
 const blackKeys = document.querySelectorAll(".black-key")   // 黒鍵
 
-const note = [,,]
+const note = ["A2","A#2","B2","C3","C#3","D3","D#3","E3","F3","F#3","G3","G#3","A3","A#3","B3","C4","C#4","D4","D#4","E4","F4","F#4","G4","G#4","A4","A#4","B4","C5","C#5","D5"]
 // 初期処理
 // Audioオブジェクトを作成セット
-
-for (var no of note){
-
-}
-for ( i = 0; i <= 29; i++ ){
-    let sound = new Audio( path + i + ".wav" )
-
-// const note = ["A2","A#2","B2","C3","C#3","D3","D#3","E3","F3","F#3","G3","G#3","A3","A#3","B3","C4","C#4","D4","D#4","E4","F4","F#4","G4","G#4","A4","A#4","B4","C5","C#5","D5"]
-
-// // 初期処理
-// // Audioオブジェクトを作成セット
-// for ( var no of note ){
-//     let sound = new Audio( path + no + ".wav" )
-
+for ( var no of note ){
+    let sound = new Audio( path + no + ".wav" )
     sound.volume = 0
     pianoSounds.push(sound)
 }
+
 // タッチ対応判定
 if (window.ontouchstart === null) {
     // タッチ対応：タッチイベントのリスナーをセット
