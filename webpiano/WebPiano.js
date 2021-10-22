@@ -1,5 +1,5 @@
 // 変数宣言
-const path = "audio"             // オーディオファイルのパス
+const path = "audio/"             // オーディオファイルのパス
 const keyMap = [
     { pcKey: "a", pianoKey: 0 },
     { pcKey: "q", pianoKey: 1 },
@@ -23,14 +23,14 @@ const keyMap = [
     { pcKey: "x", pianoKey: 19 },
     { pcKey: "c", pianoKey: 20 },
     { pcKey: "o", pianoKey: 21 },
-    { pcKey: "b", pianoKey: 22 },
+    { pcKey: "v", pianoKey: 22 },
     { pcKey: "p", pianoKey: 23 },
     { pcKey: "b", pianoKey: 24 },
     { pcKey: "@", pianoKey: 25 },
     { pcKey: "n", pianoKey: 26 },
     { pcKey: "m", pianoKey: 27 },
     { pcKey: "[", pianoKey: 28 },
-    { pcKey: "/", pianoKey: 29 },
+    { pcKey: ",", pianoKey: 29 },
 ]                                   // PCキーとピアノ鍵盤番号の紐づけ
 const pianoSounds = []              // Audioオブジェクト        
 const touchkeyNumlish = []          // タッチ中の鍵盤番号リスト
@@ -42,8 +42,8 @@ intervalIds.fill(null)              // 初期値 = null
 const pianoWrap = document.getElementById("piano-wrap")     // 鍵盤全体
 const whiteKeys = document.querySelectorAll(".white-key")   // 白鍵
 const blackKeys = document.querySelectorAll(".black-key")   // 黒鍵
+const note = ["A2","Ahan2","B2","C3","Chan3","D3","Dhan3","E3","F3","Fhan3","G3","Ghan3","A3","Ahan3","B3","C4","Chan4","D4","Dhan4","E4","F4","Fhan4","G4","Ghan4","A4","Ahan4","B4","C5","Chan5","D5"]
 
-const note = ["A2","A#2","B2","C3","C#3","D3","D#3","E3","F3","F#3","G3","G#3","A3","A#3","B3","C4","C#4","D4","D#4","E4","F4","F#4","G4","G#4","A4","A#4","B4","C5","C#5","D5"]
 // 初期処理
 // Audioオブジェクトを作成セット
 for ( var no of note ){
@@ -132,7 +132,7 @@ function handleTouchEvents(event){
 // マウスイベント発生時の処理
 function handleMouseEvents(event){
     // 左クリック以外は対象外
-    if ( event.which !== 1 ){ return }
+    if ( MouseEvent.button !== 0 ){ return }
     const x = event.pageX 
     const y = event.pageY 
     let keyNum
