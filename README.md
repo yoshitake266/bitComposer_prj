@@ -1,12 +1,8 @@
-# bitComposer_prj
+# bit composer
 - 入力された短いメロディから続きをゲーム音楽風に作曲します。
 
 ## WebApp
-Flaskを使った自動作曲システム (開発中)
+AIを使った自動作曲アプリ (開発中)
 #### new: webサイトを作りました
+![bc_main](https://user-images.githubusercontent.com/84367211/138039843-7c1eacbf-d8f5-46e5-b598-f8a70b40467c.png)
 
-## system_chart
-システム構成図
-
-## inception_deck
-プロジェクトのインセプションデッキ
