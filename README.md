@@ -6,3 +6,5 @@ AIを使った自動作曲アプリ (開発中)
 #### new: webサイトを作りました
 ![bc_main](https://user-images.githubusercontent.com/84367211/138039843-7c1eacbf-d8f5-46e5-b598-f8a70b40467c.png)
 
+#### いまやっていること
+- メロディを送信して加工したものをmp3にする機能
