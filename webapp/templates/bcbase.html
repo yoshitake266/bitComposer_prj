@@ -3,6 +3,7 @@
     <head><!--メイン-->
         <meta charset="utf-8">
         <link rel="stylesheet" href="../static/css/bootstrap.css">
+        <link rel="stylesheet" href="../static/style.css">
         <title>{{ title }}</title>
     </head>
     <body class="bg-success">
@@ -10,5 +11,6 @@
         <h1 class="text-center text-danger">{{ page_title }}</h1>
         <hr>
         {% block content %}{% endblock %}
+        <script src="{{ url_for('static', filename='WebPiano.js') }}"></script>
     </body>
 </html>
