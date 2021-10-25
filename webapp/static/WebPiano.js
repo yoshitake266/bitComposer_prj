@@ -47,7 +47,7 @@ const note = ["A2","Ahan2","B2","C3","Chan3","D3","Dhan3","E3","F3","Fhan3","G3"
 // 初期処理
 // Audioオブジェクトを作成セット
 for ( var no of note ){
-    let sound = new Audio( path + no + ".wav" )
+    let sound = new Audio(path + no + ".wav" )
     sound.volume = 0
     pianoSounds.push(sound)
 }
@@ -217,7 +217,7 @@ function soundPlay(soundNum){
 }
 
 // オーディオ停止(フェードアウト)
-function soundStop(soundNum){       
+function soundStop(soundNum){
     // 20msごとに音量を下げる
     intervalIds[soundNum] = setInterval( function(){
         if ( pianoSounds[soundNum].volume <= 0.05 ){
