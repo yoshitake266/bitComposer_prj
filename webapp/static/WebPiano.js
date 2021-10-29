@@ -1,5 +1,5 @@
 // 変数宣言
-const path = "audio/"             // オーディオファイルのパス
+const path = "static/audio/"             // オーディオファイルのパス
 const keyMap = [
     { pcKey: "a", pianoKey: 0 },
     { pcKey: "q", pianoKey: 1 },
