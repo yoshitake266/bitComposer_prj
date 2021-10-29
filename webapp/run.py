@@ -1,5 +1,7 @@
-from flask import Flask,render_template, request, redirect,send_from_directory
+from flask import Flask,render_template, request, redirect,send_from_directory,redirect,url_for
+import midi2mp3
 from datetime import datetime
+from bit_composer import parse_str_to_mid
 
 ima = datetime.now()
 
@@ -26,12 +28,25 @@ def bckey():
     page_t = "キーボード打ち込み"
     return render_template('main/bckey.html',title=title,page_title=page_t)
 
+@app.route('/str')
+def bcstr():
+    title = "文字列入力"
+    page_t = "文字列入力"
+    return render_template('main/bcstr.html',title=title,page_title=page_t)
+
 @app.route('/output')
 def outputmp3():
     title = "mp3再生"
     page_t = "mp3再生"
     return render_template('main/outputmp3.html',title=title,page_title=page_t)
 
+@app.route('/str/syori',methods=["GET","POST"])
+def bcstrsyori():
+    if request.method == "POST":
+        moji = request.form['onpu']
+        parse_str_to_mid(moji)
+        midi2mp3.output()
+    return redirect(url_for("outputmp3"))
 
 if __name__ == "__main__":
     app.run()
