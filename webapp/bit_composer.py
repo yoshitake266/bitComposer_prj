@@ -11,4 +11,4 @@ def parse_str_to_mid(str_note):
         NoteList.append(mid_note)
         offset += 0.5
     Strmidi = stream.Stream(NoteList)
-    Strmidi.write('midi', fp=f'static\\media\\out.mid')
+    Strmidi.write('midi', fp=r'static\media\out.mid')
