@@ -49,4 +49,4 @@ def bcstrsyori():
     return redirect(url_for("outputmp3"))
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0", port=80)
