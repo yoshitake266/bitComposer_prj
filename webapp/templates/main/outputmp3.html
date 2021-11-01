@@ -1,7 +1,6 @@
 {% extends "bcbase.html" %}
 
 {% block content %}
-	<audio controls src='../../static/media/out.mp3'>
-	<p class="text-center"><a class="h2 mx-auto link-warning text-decoration-none" href="{{ url_for('bcmidi') }}">midiを読み込む</a></p>
+	<p><audio controls src='../../static/media/out.mp3'></p>
 	<p><a href="{{ url_for('welcome') }}">戻る</a></p>
 {% endblock %}
