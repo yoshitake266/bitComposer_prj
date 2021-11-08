@@ -9,16 +9,20 @@
 </head>
 <body>
     <form action="/str/syori" method="POST">
-        <input type="input" id='input_notes' name="onpu" required>
+        <input type="input" name="onpu" required>
         <button type="submit" class="btn btn-primary">送信</button>
 
+        <p></p>
+        <div id='container'></div>
+        <textarea id='input_notes'></textarea>
+        
     </form>
 
     <div id=notes></div>
 
     <p><a href="{{ url_for('welcome') }}">戻る</a></p>
-    <script type=text/javascript async>
-        ABCJS.renderAbc('notes', 'c d e');
+    <script type='text/javascript'>
+        new ABCJS.Editor('input_notes', { paper_id: "container"});
     </script>
 </body>
    
