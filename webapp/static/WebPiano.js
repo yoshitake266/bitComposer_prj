@@ -32,7 +32,7 @@ const keyMap = [
     { pcKey: "[", pianoKey: 28 },
     { pcKey: ",", pianoKey: 29 },
 ]
-const key_param = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "c", "d", "e", "f", "g", "a", "b", "", "", "", "", "", "", "", ""]
+const key_param = ["A,,", "A,,^", "", "", "", "", "", "", "", "", "", "", "", "", "", "C", "D", "E", "F", "G", "A", "B", "", "", "", "", "", "", "", ""]
                                    // PCキーとピアノ鍵盤番号の紐づけ
 const pianoSounds = []              // Audioオブジェクト        
 const touchkeyNumlish = []          // タッチ中の鍵盤番号リスト
@@ -171,12 +171,14 @@ function handleMouseEvents(event){
 
 // 押した時の処理
 document.onkeydown = function(event) {
+    
     // 鍵盤番号を取得
     const obj = keyMap.find( (item) => item.pcKey === event.key )
     if ( typeof obj !== "undefined" ){
         // keyMapに含まれるキーの場合は後続処理実行
         pressPianoKey(obj.pianoKey)
-    } 
+    }
+
 }
 
 // PCke時の処理
@@ -196,7 +198,8 @@ function pressPianoKey(keyNum){
         isKeyPressing[keyNum] = true
         document.querySelector(`[data-key-num="${keyNum}"]`).classList.add("pressing")
         soundPlay(keyNum)
-        document.querySelector
+        document.getElementById("input_notes").focus();
+        document.getElementById('input_notes').value += (key_param[keyNum] + ' ');
     }
 }
 
