@@ -78,3 +78,8 @@
     left: 600px;
     overflow: auto;
 }
+
+#commit {
+    position: absolute;
+    left: 1500px;
+}

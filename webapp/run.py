@@ -1,7 +1,7 @@
 from flask import Flask,render_template, request, redirect,send_from_directory,redirect,url_for
 import midi2mp3
 from datetime import datetime
-from bit_composer import parse_str_to_mid
+from bit_composer import parse_str_to_mid, str_to_Note
 
 ima = datetime.now()
 
@@ -40,8 +40,8 @@ def outputmp3():
     page_t = "mp3再生"
     return render_template('main/outputmp3.html',title=title,page_title=page_t)
 
-@app.route('/str/syori',methods=["GET","POST"])
-def bcstrsyori():
+@app.route('/key/syori',methods=["GET","POST"])
+def bckeysyori():
     if request.method == "POST":
         moji = request.form['onpu']
         parse_str_to_mid(moji)
