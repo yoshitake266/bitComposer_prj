@@ -71,3 +71,15 @@
     width: 100%;
     text-align: center;
 }
+
+#input_notes {
+    position: absolute;
+    top: 400px;
+    left: 600px;
+    overflow: auto;
+}
+
+#commit {
+    position: absolute;
+    left: 1500px;
+}

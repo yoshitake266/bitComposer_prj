@@ -1,6 +1,19 @@
 {% extends "bcbase.html" %}
 
 {% block content %}
+<!DOCTYPE html>
+<head>
+    <meta charset = 'utf-8'>
+    <script type='text/javascript' src={{ url_for('static', filename='js/abcjs-basic-min.js')}}></script>
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+</head>
+<body>
+    <form action="/key/syori" method="POST">
+        <div id='container'></div>
+        <input type="text" id='input_notes' name="onpu" readonly="readonly" required>
+
+        <p></p>
+    
     <div id="piano-container">
         <div id="piano-wrap">
             <div class="piano-key white-key" data-key-num="0"><span class="key-label">A</span></div><!-- ラ A -->
@@ -36,5 +49,12 @@
             <div class="piano-key white-key" data-key-num="29"><span class="key-label">,</span></div><!-- レ -->
         </div>
     </div>
+    <button type="submit" id='commit' class="btn btn-primary">送信</button>
+    </form>
     <p><a href="{{ url_for('welcome') }}">戻る</a></p>
+    <script type='text/javascript'>
+        new ABCJS.Editor('input_notes', { paper_id: "container"});
+    </script>
+</body>
+    
 {% endblock %}
