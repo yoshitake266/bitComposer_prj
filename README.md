@@ -16,7 +16,7 @@ AIを使った自動作曲アプリ (開発中)
 https://user-images.githubusercontent.com/43458963/140646112-cf224084-281a-49da-ac29-9407ec4a9067.mp4
 
 ### ver 0.3
-- ピアノGUIと楽譜のGUIのプログラム
+- 入力画面のGUIのプログラム
 
 ### ver 0.4
 - 短いメロディから続きのメロディを推測するAIの作成
