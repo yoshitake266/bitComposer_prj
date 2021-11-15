@@ -31,7 +31,9 @@ const keyMap = [
     { pcKey: "m", pianoKey: 27 },
     { pcKey: "[", pianoKey: 28 },
     { pcKey: ",", pianoKey: 29 },
-]                                   // PCキーとピアノ鍵盤番号の紐づけ
+]
+const abc_param = ["A,,", "^A,,", "B,,", "C,", "^C,", "D,", "^D,", "E,", "F,", "^F,", "G,", "^G,", "A,", "^A,", "B,", "C", "^C", "D", "^D", "E", "F", "^F", "G", "^G", "A", "^A", "B", "C'", "^C'", "D'"]
+                                   // PCキーとピアノ鍵盤番号の紐づけ
 const pianoSounds = []              // Audioオブジェクト        
 const touchkeyNumlish = []          // タッチ中の鍵盤番号リスト
 let clickedKeyNum = null            // クリック中の鍵盤番号リスト
@@ -105,8 +107,8 @@ function handleTouchEvents(event){
 
     // 各接触ポイントから押下中の鍵盤番号リストを作成
     for ( let i = 0; i < event.touches.length; i++ ){
-        const x = event.touches[i].pageX 
-        const y = event.touches[i].pageY 
+        const x = event.touches[i].pageX
+        const y = event.touches[i].pageY
         let keyNum = getKeyNum(x, y)
         if ( keyNum !== null ){
             if ( !touchKeyNullish.includes(keyNum) ){
@@ -167,14 +169,17 @@ function handleMouseEvents(event){
     }
 }
 
-// 時の処理
+// 押した時の処理
 document.onkeydown = function(event) {
+    
     // 鍵盤番号を取得
     const obj = keyMap.find( (item) => item.pcKey === event.key )
     if ( typeof obj !== "undefined" ){
         // keyMapに含まれるキーの場合は後続処理実行
+        
         pressPianoKey(obj.pianoKey)
     } 
+
 }
 
 // PCke時の処理
@@ -184,16 +189,20 @@ document.onkeyup = function(event) {
     if ( typeof obj !== "undefined" ){
         // keyMapに含まれるキーの場合は後続処理実行
         releasePianoKey(obj.pianoKey)
+        
     } 
 }
 
 // ピアノ鍵盤を押下した時の処理
 function pressPianoKey(keyNum){
+    
     if ( !isKeyPressing[keyNum] ){
         // 鍵盤を離している場合のみ続行(長押しによる連打防止)
         isKeyPressing[keyNum] = true
         document.querySelector(`[data-key-num="${keyNum}"]`).classList.add("pressing")
         soundPlay(keyNum)
+        document.getElementById("input_notes").focus()
+        document.getElementById("input_notes").value += (abc_param[keyNum] + ' ');
     }
 }
 
@@ -204,6 +213,9 @@ function releasePianoKey(keyNum){
         isKeyPressing[keyNum] = false
         document.querySelector(`[data-key-num="${keyNum}"]`).classList.remove("pressing")
         soundStop(keyNum)
+        
+        
+        
     }
 }
 
