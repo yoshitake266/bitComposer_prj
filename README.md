@@ -16,6 +16,8 @@
 
 # AIについて
 自動作曲はRNN(Recurrent Neural Network)を使っています。
+![キャプチャ](https://user-images.githubusercontent.com/43458963/143048883-7ccfc8c7-33bf-4be4-9133-b6e54f8e240f.PNG)
+
 
 # 進捗
 ### ver 0.15
@@ -31,8 +33,10 @@ https://user-images.githubusercontent.com/43458963/140646112-cf224084-281a-49da-
 ### ver 0.3
 - 入力画面のGUIのプログラム
 
+https://user-images.githubusercontent.com/43458963/143050028-2444788b-3c7b-49ed-bbf6-2f5608b2a3cf.mp4
+
 ### ver 0.4
-- 短いメロディから続きのメロディを推測するAIの作成
+- 自動作曲AIの作成
 
 ### ver 0.5
 - デザインとシステムの調整
