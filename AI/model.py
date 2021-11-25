@@ -1,5 +1,6 @@
 import glob # 複数のファイルを取り出す
 import numpy as np
+import os
 from music21 import converter, instrument, note, chord
 from keras.utils import np_utils
 from tensorflow.keras import Sequential
@@ -54,11 +55,11 @@ print(network_output.shape)
 
 model = Sequential()
 model.add(Lambda((lambda x: x/n_len), input_shape=(network_input.shape[1], network_input.shape[2])))
-model.add(LSTM(256, return_sequences=True))
+model.add(LSTM(150, return_sequences=True))
 model.add(Dropout(0.3))
-model.add(LSTM(256, return_sequences=True))
+model.add(LSTM(150, return_sequences=True))
 model.add(Dropout(0.3))
-model.add(LSTM(256))
+model.add(LSTM(150))
 model.add(Dropout(0.3))
 model.add(Dense(n_len))
 model.add(Activation('softmax'))
@@ -66,4 +67,15 @@ model.add(Activation('softmax'))
 model.compile(loss="categorical_crossentropy", optimizer=Adam(lr=0.0001))
 
 model.summary()
-model.fit(network_input, network_output, epochs=500, batch_size=64)
+
+checkpoint_path = "checkpoint/cp.ckpt"
+filepath = os.path.dirname(checkpoint_path)
+cp_callback = ModelCheckpoint(checkpoint_path,
+                              save_weights_only=True,
+                              monitor="loss",
+                              mode="min",
+                              period=50,
+                              verbose=1)
+
+model.fit(network_input, network_output, epochs=500, batch_size=64,
+          callbacks=[cp_callback])
