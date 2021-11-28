@@ -7,6 +7,7 @@ from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense, Dropout, LSTM, Activation, Lambda
 from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.optimizers import Adam
+import pickle
 
 network_input = []
 network_output = []
@@ -33,8 +34,12 @@ for element in note_to_parse:
 
 appeared_notes = sorted(set(string_notes))
 n_len = len(appeared_notes) # 正規化用
+f = open('n_len.txt', 'wb')
+pickle.dump(n_len, f)
 
 note_int = dict((note, n) for n, note in enumerate(appeared_notes))
+f = open('noteList.txt', 'wb')
+pickle.dump(note_int, f)
 
 numerical_note = []
 for note in string_notes:
@@ -53,6 +58,8 @@ print('--------------')
 print(network_output)
 print(network_output.shape)
 
+f = open('input_notes.txt', 'wb')
+pickle.dump(network_input, f)
 model = Sequential()
 model.add(Lambda((lambda x: x/n_len), input_shape=(network_input.shape[1], network_input.shape[2])))
 model.add(LSTM(150, return_sequences=True))
@@ -77,5 +84,8 @@ cp_callback = ModelCheckpoint(checkpoint_path,
                               period=50,
                               verbose=1)
 
-model.fit(network_input, network_output, epochs=500, batch_size=64,
-          callbacks=[cp_callback])
+model.load_weights(checkpoint_path)
+
+model.save('saved_model/my_model')
+# model.fit(network_input, network_output, epochs=500, batch_size=64,
+#           callbacks=[cp_callback])
