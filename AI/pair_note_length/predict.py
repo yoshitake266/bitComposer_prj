@@ -21,7 +21,7 @@ data = pickle.load(f)
 model = model_conf.create_model(n_len, data)
 
 model = model_conf.model_load(model)
-music_length = 300
+music_length = 250
 
 start = np.random.randint(0, len(numerical_note_list)-1)
 input_notes = numerical_note_list[start]
