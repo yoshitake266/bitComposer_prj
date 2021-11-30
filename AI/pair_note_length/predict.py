@@ -12,7 +12,13 @@ int2note = dict((val, key) for key,val in note_int.items())
 f = open('input_notes.txt', 'rb')
 numerical_note_list = pickle.load(f)
 
-model = model_conf.create_model()
+f = open('n_len.txt', 'rb')
+n_len = pickle.load(f)
+
+f = open('input_notes.txt', 'rb')
+data = pickle.load(f)
+
+model = model_conf.create_model(n_len, data)
 
 model = model_conf.model_load(model)
 music_length = 300

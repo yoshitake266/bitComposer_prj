@@ -5,20 +5,14 @@ import pickle
 import os
 
 #モデルの作成
-def create_model():
-    f = open('n_len.txt', 'rb')
-    n_len = pickle.load(f)
-    
-    f = open('input_notes.txt', 'rb')
-    network_input = pickle.load(f)
-    
+def create_model(n_len, network_input):
     model = Sequential()
     model.add(Lambda((lambda x: x/n_len), input_shape=(network_input.shape[1], network_input.shape[2])))
-    model.add(LSTM(150, return_sequences=True))
+    model.add(LSTM(300, return_sequences=True))
     model.add(Dropout(0.3))
-    model.add(LSTM(150, return_sequences=True))
+    model.add(LSTM(300, return_sequences=True))
     model.add(Dropout(0.3))
-    model.add(LSTM(150))
+    model.add(LSTM(300))
     model.add(Dropout(0.3))
     model.add(Dense(n_len))
     model.add(Activation('softmax'))
