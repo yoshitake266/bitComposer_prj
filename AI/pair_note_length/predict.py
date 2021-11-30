@@ -23,8 +23,7 @@ model = model_conf.create_model(n_len, data)
 model = model_conf.model_load(model)
 music_length = 250
 
-start = np.random.randint(0, len(numerical_note_list)-1)
-input_notes = numerical_note_list[start]
+# start = np.random.randint(0, len(numerical_note_list)-1)
 numerical_prediction_output = [n for n in input_notes]
 numerical_prediction_output = [n for i in numerical_prediction_output for n in i]
 
