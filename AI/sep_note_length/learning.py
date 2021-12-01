@@ -115,9 +115,9 @@ cp_callback = ModelCheckpoint(checkpoint_path,
                             verbose=1)
 model1.summary()
 
-model.load_weights(checkpoint_path)
+# model.load_weights(checkpoint_path)
 
-model1.fit(network_input_notes, network_output_notes, epochs=1500, batch_size=64,
+model1.fit(network_input_notes, network_output_notes, epochs=1000, batch_size=64,
           callbacks=[cp_callback])
 
 checkpoint_path = "checkpoint_length/cp.ckpt"
@@ -129,5 +129,5 @@ cp_callback = ModelCheckpoint(checkpoint_path,
                             period=100,
                             verbose=1)
 
-model2.fit(network_input_length, network_output_length, epochs=1500, batch_size=64,
+model2.fit(network_input_length, network_output_length, epochs=1000, batch_size=64,
            callbacks=[cp_callback])
