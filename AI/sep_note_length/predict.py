@@ -37,17 +37,20 @@ numerical_prediction_output = []
 numerical_prediction_output_length = []
 
 input_notes = ["C4", "C#4", "D4", "D#4", "E4", "F4", "F#4", "G4", "A4", "B4"]
-input_length = [1.0, 0.5, 1.0, 2.0, 0.25, 1.0, 1.0, 2.0, 1.0, 4.0]
+input_length = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+input_notes = [note_int[st] for st in input_notes]
+input_length = [length_int[fl] for fl in input_length]
 
 print(numerical_prediction_output)
 print('----------------')
 for note_index in range(music_length):
 	prediction_input_note = np.reshape(input_notes, (1, len(input_notes), 1))
 
-	prediction_input_length = np.reshape(input_length, (1, len(duration_len), 1))
+	prediction_input_length = np.reshape(input_length, (1, len(input_length), 1))
 	
-	prediction1 = model1.predict(prediction_input, verbose=0)
-	prediction2 = model2.predict(prediction_input_length)
+	prediction1 = model1.predict(prediction_input_note, verbose=0)
+	prediction2 = model2.predict(prediction_input_length, verbose=0)
 
 	numerical_note = np.argmax(prediction1)
 	numerical_prediction_output.append(numerical_note)
@@ -64,6 +67,7 @@ for note_index in range(music_length):
 string_prediction_output = []
 
 for i in range(music_length):
+	#音程リストと長さのリストを格納
 	string_prediction_output.append([int2note[numerical_prediction_output[i]], int2length[numerical_prediction_output_length[i]]])
 
 offset = 0.0
@@ -76,7 +80,8 @@ for string_note in string_prediction_output:
 	#音の長さが分数の場合
 	if isinstance(note_info[1], Fraction):
 		note_length = float(note_info[1])
-
+	else:
+		note_length = note_info[1]
 	#和音
 	if ('.' in note_interval):
 		notes_in_chord = note_interval.split('.')
