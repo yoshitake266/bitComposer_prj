@@ -1,7 +1,7 @@
 from music21 import converter, instrument, note, chord, stream
 import re
 
-def str_to_Note(str_note):
+def abc_to_note(str_note):
     abc_note = str_note.split(" ")
     abc_note.pop(-1)
     
@@ -30,7 +30,7 @@ def str_to_Note(str_note):
     
 def parse_str_to_mid(str_note):
 
-    new_spl_note = str_to_Note(str_note)
+    new_spl_note = abc_to_note(str_note)
     NoteList = []
     offset = 0.5
     for i in new_spl_note:
