@@ -83,7 +83,7 @@
   - [Tensorflow]
 
 - Webシステム
-  - [Nginx]
+  - []
   - [Flask]
 
 <div style="page-break-before:always">
