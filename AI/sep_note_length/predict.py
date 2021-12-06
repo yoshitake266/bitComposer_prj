@@ -30,7 +30,7 @@ model1 = model_conf.model_load(model1, "checkpoint_note/cp.ckpt")
 model2 = model_conf.create_length_model(duration_len, shape)
 model2 = model_conf.model_load(model2, "checkpoint_length/cp.ckpt")
 
-music_length = 250
+music_length = 240
 
 # start = np.random.randint(0, len(numerical_note_list)-1)
 numerical_prediction_output = []

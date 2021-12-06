@@ -1,7 +1,8 @@
 from flask import Flask,render_template, request, redirect,send_from_directory,redirect,url_for
 import midi2mp3
 from datetime import datetime
-from bit_composer import parse_str_to_mid, str_to_Note
+from bit_composer import parse_str_to_mid, abc_to_note
+from AI.prediction import predict
 
 ima = datetime.now()
 
@@ -44,7 +45,8 @@ def outputmp3():
 def bckeysyori():
     if request.method == "POST":
         moji = request.form['onpu']
-        parse_str_to_mid(moji)
+        notes = abc_to_note(moji)
+        predict(notes)
         midi2mp3.output()
     return redirect(url_for("outputmp3"))
 
