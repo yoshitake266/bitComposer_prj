@@ -32,7 +32,7 @@ def predict(user_inputs_notes):
 	model2 = model_conf.create_length_model(duration_len, shape)
 	model2 = model_conf.model_load(model2, "AI/checkpoint_length/cp.ckpt")
 
-	music_length = 240
+	music_length = randint(120,720)
 
 	#ユーザからの入力
 	input_notes = [note_int[st] for st in user_inputs_notes]
