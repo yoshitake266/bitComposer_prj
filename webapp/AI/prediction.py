@@ -32,7 +32,7 @@ def predict(user_inputs_notes):
 	model2 = model_conf.create_length_model(duration_len, shape)
 	model2 = model_conf.model_load(model2, "AI/checkpoint_length/cp.ckpt")
 
-	music_length = 240
+	music_length = randint(120,720)
 
 	#ユーザからの入力
 	input_notes = [note_int[st] for st in user_inputs_notes]
@@ -47,11 +47,13 @@ def predict(user_inputs_notes):
 		input_length = input_length[-11:-1]
 	elif len(input_notes) < 10:
 		for i in range(10 - len(input_notes)):
+			print(i)
 			r = randint(0, n_len)
 			input_notes.append(r)
 			#8分音符の長さ (今のところabc.jsで8分音符しか入力できない)
 			input_length.append(length_int[0.5])
 	
+
 
 	print(numerical_prediction_output)
 	print('----------------')
