@@ -4,14 +4,13 @@ from datetime import datetime
 from bit_composer import parse_str_to_mid, abc_to_note
 from AI.prediction import predict
 
-ima = datetime.now()
-
 upload_folder = './uploads'
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = upload_folder
 
 @app.route('/')
 def welcome():
+    ima = datetime.now()
     title = "ようこそ"
     page_t = "メインページ"
     time = ima.strftime("%Y年%m月%d日")
