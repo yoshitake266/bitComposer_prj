@@ -1,6 +1,6 @@
 {% extends "bcbase.html" %}
 
 {% block content %}
-	<p><audio controls src='../../static/media/out.mp3'></p>
+<p><audio controls src={{ url_for('static', filename='media/out.mp3')}}></p>
 	<p><a href="{{ url_for('welcome') }}">戻る</a></p>
 {% endblock %}
