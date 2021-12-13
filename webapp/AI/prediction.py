@@ -37,6 +37,8 @@ def predict(user_inputs_notes):
 	#生成した音の長さのリスト
 	numerical_prediction_output_length = [length_int[0.5] for i in input_notes ]
 	input_length = numerical_prediction_output_length
+
+	#入力が10より少ないなら10音分の入力に補填
 	if len(input_notes) > 10:
 		input_notes = input_notes[-11:-1]
 		input_length = input_length[-11:-1]
