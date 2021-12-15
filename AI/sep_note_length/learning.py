@@ -12,6 +12,7 @@ sequence_length = 10 #一度に入力する長さ
 network_input_notes = [] #学習データ
 network_output_notes = [] #正解データ
 
+#音価
 network_input_length = []
 network_output_length = []
 
