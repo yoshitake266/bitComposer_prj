@@ -91,6 +91,7 @@ for i in range(len(numerical_note) - sequence_length):
 
 #10行1列にする
 network_input_notes = np.reshape(network_input_notes, (-1, sequence_length, 1))
+#正解データをone-hotエンコーディング
 network_output_notes = np_utils.to_categorical(network_output_notes)
 
 #音価
