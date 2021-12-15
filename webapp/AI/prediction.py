@@ -9,7 +9,7 @@ import os
 
 def predict(user_inputs_notes):
 
-	#音と数のリスト、ラベルの数、モデル作成のための行列の形
+	#音と数のリスト、ラベルの数、モデル作成のための行列の形を読み込む
 	f = open('AI/params/noteList.txt', 'rb')
 	note_int = pickle.load(f)
 	int2note = dict((val, key) for key,val in note_int.items())
@@ -29,7 +29,8 @@ def predict(user_inputs_notes):
 	model1 = model_conf.model_load(model1, "AI/checkpoint_note/cp.ckpt")
 	model2 = model_conf.create_length_model(duration_len, shape)
 	model2 = model_conf.model_load(model2, "AI/checkpoint_length/cp.ckpt")
-	music_length = 240
+	
+	music_length = 240 #生成する音の数
 	#ユーザからの入力
 	input_notes = [note_int[st] for st in user_inputs_notes]
 	#生成した音程のリスト
@@ -62,9 +63,10 @@ def predict(user_inputs_notes):
 
 		numerical_length = np.argmax(prediction2)
 		numerical_prediction_output_length.append(numerical_length)
+
 		#次に入力する音
 		input_notes = np.append(input_notes, numerical_note)
-		#1音ずらして音の入力にする
+		#1音ずらして10音にする
 		input_notes = input_notes[1:11]
 		#音の長さ
 		input_length = np.append(input_length, numerical_length)
@@ -76,7 +78,7 @@ def predict(user_inputs_notes):
 		string_prediction_output.append([int2note[numerical_prediction_output[i]], int2length[numerical_prediction_output_length[i]]])
 
 	offset = 0.0 #音のタイミング
-	prediction_output = [] #Note
+	prediction_output = [] #midi note
 
 	#midi生成
 	for string_note in string_prediction_output:
@@ -117,5 +119,6 @@ def predict(user_inputs_notes):
 			prediction_output.append(new_note)
 			offset += note_length
 
+	#midiの作成
 	midi_stream = stream.Stream(prediction_output)
 	midi_stream.write('midi', fp='./static/media/out.mid')

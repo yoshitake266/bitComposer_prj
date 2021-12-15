@@ -1,10 +1,8 @@
 from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense, Dropout, LSTM, Activation, Lambda
 from tensorflow.keras.optimizers import Adam
-import pickle
-import os
 
-#モデルの作成
+#音程AIモデルの作成
 def create_note_model(length, network_shape):
     print(network_shape)
     model = Sequential()
@@ -23,6 +21,7 @@ def create_note_model(length, network_shape):
     model.summary()
     return model
 
+#音価AIモデルの作成
 def create_length_model(length, network_shape):
     model = Sequential()
     model.add(Lambda((lambda x: x/length), input_shape=(network_shape[0], network_shape[1])))
@@ -39,6 +38,7 @@ def create_length_model(length, network_shape):
     
     model.summary()
     return model
+
 #重みを読み込む
 def model_load(model, checkpoint_path):
 
