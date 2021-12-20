@@ -34,10 +34,12 @@ const keyMap = [
 ]
 const abc_param = ["A,,", "^A,,", "B,,", "C,", "^C,", "D,", "^D,", "E,", "F,", "^F,", "G,", "^G,", "A,", "^A,", "B,", "C", "^C", "D", "^D", "E", "F", "^F", "G", "^G", "A", "^A", "B", "C'", "^C'", "D'"]
 const abc_leng = ["8","4","2"," ","1/2"]
+const abc_id = ["zen","2","4","8","16"]
                                    // PCキーとピアノ鍵盤番号の紐づけ
 const pianoSounds = []              // Audioオブジェクト        
 const touchkeyNumlish = []          // タッチ中の鍵盤番号リスト
 let clickedKeyNum = null            // クリック中の鍵盤番号リスト
+let abc_leng_arnum = 3
 const isKeyPressing = new Array(30) // ピアノ鍵盤ごとの押下状態
 isKeyPressing.fill(false)           // 初期値 = false            
 const intervalIds = new Array(30)   // 各オーディオフェードアウトのインターバルID
@@ -48,6 +50,10 @@ const blackKeys = document.querySelectorAll(".black-key")   // 黒鍵
 const note = ["A2","Ahan2","B2","C3","Chan3","D3","Dhan3","E3","F3","Fhan3","G3","Ghan3","A3","Ahan3","B3","C4","Chan4","D4","Dhan4","E4","F4","Fhan4","G4","Ghan4","A4","Ahan4","B4","C5","Chan5","D5"]
 
 // 初期処理
+
+
+
+
 // Audioオブジェクトを作成セット
 for ( var no of note ){
     let sound = new Audio(path + no + ".wav" )
@@ -132,44 +138,6 @@ function handleTouchEvents(event){
     }
 }
 
-// マウスイベント発生時の処理
-function handleMouseEvents(event){
-    // 左クリック以外は対象外
-    if ( MouseEvent.button !== 0 ){ return }
-    const x = event.pageX 
-    const y = event.pageY 
-    let keyNum
-    switch ( event.type ){
-        case "mousedown":
-            keyNum = getKeyNum(x, y)
-            if ( keyNum !== null ){ pressPianoKey(keyNum) }
-            clickedKeyNum = keyNum
-            break
-        case "mouseup":
-            if ( clickedKeyNum !== null ){
-                keyNum = getKeyNum(x, y)
-                if ( keyNum !== null ){ releasePianoKey(keyNum) }
-                clickedKeyNum = null
-            }
-            break
-        case "mousemove":
-            keyNum = getKeyNum(x, y)
-            if ( keyNum !== null ){
-                // マウスポインタ位置が直前の鍵盤以外の鍵盤上の場合
-                if ( keyNum !== clickedKeyNum ){ 
-                    releasePianoKey(clickedKeyNum)
-                    pressPianoKey(keyNum) 
-                    clickedKeyNum = keyNum
-                }
-            } else {
-                // マウスポインタ位置が鍵盤外の場合
-                releasePianoKey(clickedKeyNum)
-                clickedKeyNum = null
-            }
-            break
-    }
-}
-
 // 押した時の処理
 document.onkeydown = function(event) {
     
@@ -194,6 +162,21 @@ document.onkeyup = function(event) {
     } 
 }
 
+function but_leng(ele){
+    if(ele.id == abc_id[0]){
+        abc_leng_arnum = 0;
+    }else if(ele.id == abc_id[1]){
+        abc_leng_arnum = 1;
+    }else if(ele.id == abc_id[2]){
+        abc_leng_arnum = 2;
+    }else if(ele.id == abc_id[3]){
+        abc_leng_arnum = 3;
+    }else if(ele.id == abc_id[4]){
+        abc_leng_arnum = 4;
+    }
+}
+
+
 // ピアノ鍵盤を押下した時の処理
 function pressPianoKey(keyNum){
     
@@ -203,7 +186,7 @@ function pressPianoKey(keyNum){
         document.querySelector(`[data-key-num="${keyNum}"]`).classList.add("pressing")
         soundPlay(keyNum)
         document.getElementById("input_notes").focus()
-        document.getElementById("input_notes").value += (abc_param[keyNum] + abc_leng[3]);
+        document.getElementById("input_notes").value += (abc_param[keyNum] + abc_leng[abc_leng_arnum]);
     }
 }
 
