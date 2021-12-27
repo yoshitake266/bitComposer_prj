@@ -31,9 +31,16 @@ const keyMap = [
     { pcKey: "m", pianoKey: 27 },
     { pcKey: "[", pianoKey: 28 },
     { pcKey: ",", pianoKey: 29 },
+    { pckey: "Backspace",pianoKey: 30},
+
 ]
-const abc_param = ["A,,", "^A,,", "B,,", "C,", "^C,", "D,", "^D,", "E,", "F,", "^F,", "G,", "^G,", "A,", "^A,", "B,", "C", "^C", "D", "^D", "E", "F", "^F", "G", "^G", "A", "^A", "B", "C'", "^C'", "D'"]
-                                   // PCキーとピアノ鍵盤番号の紐づけ
+  // PCキーとピアノ鍵盤番号の紐づけ
+const abc_param = ["A,,", "^A,,", "B,,", "C,", "^C,", "D,", "^D,", "E,", "F,", "^F,", "G,", "^G,", "A,", "^A,", "B,", "C", "^C", "D", "^D", "E", "F", "^F", "G", "^G", "A", "^A", "B", "C'", "^C'", "D'", 
+    //オブジェクトの要素を一つずつ削除していく
+    delete array[array.length-1]
+]
+    
+
 const pianoSounds = []              // Audioオブジェクト        
 const touchkeyNumlish = []          // タッチ中の鍵盤番号リスト
 let clickedKeyNum = null            // クリック中の鍵盤番号リスト
