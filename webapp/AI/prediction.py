@@ -9,26 +9,27 @@ import os
 
 def predict(user_inputs_notes):
 
+	path = os.path.dirname(__file__) + '/'
 	#音と数のリスト、ラベルの数、モデル作成のための行列の形を読み込む
-	f = open('AI/params/noteList.txt', 'rb')
+	f = open(path + 'params/noteList.txt', 'rb')
 	note_int = pickle.load(f)
 	int2note = dict((val, key) for key,val in note_int.items())
-	f = open('AI/params/n_len.txt', 'rb')
+	f = open(path + 'params/n_len.txt', 'rb')
 	n_len = pickle.load(f)
-	f = open('AI/params/lengthList.txt', 'rb')
+	f = open(path + 'params/lengthList.txt', 'rb')
 	length_int = pickle.load(f)
 	int2length = dict((val, key) for key,val in length_int.items())
-	f = open('AI/params/duration_len.txt', 'rb')
+	f = open(path + 'params/duration_len.txt', 'rb')
 	duration_len = pickle.load(f)
 
-	f = open('AI/params/input_shape.txt', 'rb')
+	f = open(path + 'params/input_shape.txt', 'rb')
 	shape = pickle.load(f)
 
 	#モデル作成
 	model1 = model_conf.create_note_model(n_len, shape)
-	model1 = model_conf.model_load(model1, "AI/checkpoint_note/cp.ckpt")
+	model1 = model_conf.model_load(model1, path + "checkpoint_note/cp.ckpt")
 	model2 = model_conf.create_length_model(duration_len, shape)
-	model2 = model_conf.model_load(model2, "AI/checkpoint_length/cp.ckpt")
+	model2 = model_conf.model_load(model2, path + "checkpoint_length/cp.ckpt")
 	
 	music_length = 240 #生成する音の数
 	#ユーザからの入力
@@ -121,4 +122,4 @@ def predict(user_inputs_notes):
 
 	#midiの作成
 	midi_stream = stream.Stream(prediction_output)
-	midi_stream.write('midi', fp='./static/media/out.mid')
+	midi_stream.write('midi', fp=path + '../static/media/out.mid')

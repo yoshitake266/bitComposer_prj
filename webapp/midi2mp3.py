@@ -3,5 +3,6 @@ import os
 
 
 def output():
-	fs = FluidSynth(sound_font= './static/media/default.sf2')
-	fs.midi_to_audio('./static/media/out.mid', './static/media/out.mp3')
+	path = os.path.dirname(__file__) + '/'
+	fs = FluidSynth(sound_font= path + 'static/media/default.sf2')
+	fs.midi_to_audio(path + 'static/media/out.mid', path + 'static/media/out.mp3')
