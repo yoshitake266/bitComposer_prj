@@ -33,6 +33,8 @@ const keyMap = [
     { pcKey: ",", pianoKey: 29 },
 ]
 const abc_param = ["A,,", "^A,,", "B,,", "C,", "^C,", "D,", "^D,", "E,", "F,", "^F,", "G,", "^G,", "A,", "^A,", "B,", "C", "^C", "D", "^D", "E", "F", "^F", "G", "^G", "A", "^A", "B", "C'", "^C'", "D'"]
+const abc_rest = "z"
+const abc_mode = true
 const abc_leng = ["8","4","2"," ","1/2"]
 const abc_id = ["zen","2","4","8","16"]
                                    // PCキーとピアノ鍵盤番号の紐づけ
@@ -176,6 +178,9 @@ function but_leng(ele){
     }
 }
 
+function kyufu(event){
+    document.getElementById("input_notes").value += (abc_rest + abc_leng[abc_leng_arnum]);
+}
 
 // ピアノ鍵盤を押下した時の処理
 function pressPianoKey(keyNum){
