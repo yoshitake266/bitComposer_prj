@@ -252,3 +252,7 @@ function soundStop(soundNum){
         }
     }, 20 )
 }
+function clearTextarea() {//オールリセット
+	var textareaForm = document.getElementById("container");
+  textareaForm.value = '';
+}
