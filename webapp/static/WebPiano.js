@@ -31,6 +31,13 @@ const keyMap = [
     { pcKey: "m", pianoKey: 27 },
     { pcKey: "[", pianoKey: 28 },
     { pcKey: ",", pianoKey: 29 },
+    { pcKey: "BackSpace", pianoKey: 30},
+    { pcKey: "Delete", pianoKey: 31},
+    { pcKey: "←", pianoKey: 32},
+    { pcKey: "→", pianoKey: 33},
+]
+const note_edit_keys = [
+    
 ]
 const abc_param = ["A,,", "^A,,", "B,,", "C,", "^C,", "D,", "^D,", "E,", "F,", "^F,", "G,", "^G,", "A,", "^A,", "B,", "C", "^C", "D", "^D", "E", "F", "^F", "G", "^G", "A", "^A", "B", "C'", "^C'", "D'"]
 const abc_leng = ["8","4","2"," ","1/2"]
@@ -146,8 +153,10 @@ document.onkeydown = function(event) {
     const obj = keyMap.find( (item) => item.pcKey === event.key )
     if ( typeof obj !== "undefined" ){
         // keyMapに含まれるキーの場合は後続処理実行
-        
-        pressPianoKey(obj.pianoKey)
+        if (obj.pianoKey < 30)
+            pressPianoKey(obj.pianoKey)
+        else
+            alert('Hello');
     } 
 
 }
@@ -159,8 +168,9 @@ document.onkeyup = function(event) {
     if ( typeof obj !== "undefined" ){
         // keyMapに含まれるキーの場合は後続処理実行
         releasePianoKey(obj.pianoKey)
-        
     } 
+
+
 }
 
 function but_leng(ele){
