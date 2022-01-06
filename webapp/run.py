@@ -13,8 +13,8 @@ def welcome():
     ima = datetime.now()
     title = "ようこそ"
     page_t = "メインページ"
-    time = ima.strftime("%Y年%m月%d日")
-    return render_template('index.html',title=title,page_title=page_t,time=time)
+    #time = ima.strftime("%Y年%m月%d日")
+    return render_template('index.html',title=title,page_title=page_t)
 
 @app.route('/midi',methods=["GET","POST"])
 def bcmidi():
