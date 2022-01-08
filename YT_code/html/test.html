@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script type= "text/javascript" src="js/abcjs-basic-min.js"></script>
+    </head>
+    <body>
+        <textarea  id="p" readonly="readonly"></textarea>
+        <div id="content"></div>
+        <script type='text/javascript'>
+            var interval_start = 0 //カーソル範囲のはじめ
+            var interval_end = 0  //カーソル範囲の終わり
+            var length = [0] // 入力文字の長さのリスト(intervalの保持)
+            var context = ""
+            var index = 0 
+            var input = document.getElementById("p") //テキストボックス
+
+            document.onkeydown = function(event){
+                if(event.key === ("Delete")){
+                    console.log(event.key)
+                    if(index > 0){
+                    	length.pop()
+                        interval_end = interval_start
+                        input.value = input.value.slice(0, interval_end) //テキスト文字の削減
+                        interval_start = interval_end - length[--index] //範囲の削減
+
+                        console.log("はじめ" + interval_start)
+                        console.log("終わり" + interval_end)
+                        input.setSelectionRange(interval_start, interval_end)
+                        input.focus()
+                    }
+                }
+                else{
+                    console.log(event.key)
+                    index++
+                    if(event.key === "a"){
+                    	if(index % 15 === 0){
+                    		context='A \n'
+                    	}
+                    	else{
+                    		context = 'A '
+                    	}
+                        length.push(context.length)
+                    }
+                    else if(event.key === "b"){
+                    	if(index % 15 === 0){
+                    		context = 'A, \n'
+                    	}
+                    	else{
+                    		context = 'A, '
+                        	
+                    	}
+                    	length.push(context.length)
+                    }
+                    input.value += context
+                    console.log(context)
+                    //テキスト文字の追加
+                    interval_start = interval_end
+                    interval_end = interval_start + length[index] //範囲の拡大
+                    
+                    input.focus()
+                    input.setSelectionRange(interval_start, interval_end) // 範囲選択の設定
+                }
+            }
+            new ABCJS.Editor("p", {paper_id: "content"});
+        </script>
+    </body>
+</html>
