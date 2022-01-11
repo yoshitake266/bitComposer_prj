@@ -5,7 +5,7 @@
         <script type= "text/javascript" src="js/abcjs-basic-min.js"></script>
     </head>
     <body>
-        <textarea  id="p" readonly="readonly"></textarea>
+        <textarea  id="p" readonly="readonly" ></textarea>
         <div id="content"></div>
         <script type='text/javascript'>
             var interval_start = 0 //カーソル範囲のはじめ
@@ -33,12 +33,10 @@
                 else{
                     console.log(event.key)
                     index++
+                    context = 'A '
                     if(event.key === "a"){
                     	if(index % 15 === 0){
-                    		context='A \n'
-                    	}
-                    	else{
-                    		context = 'A '
+                    		context +='\n'
                     	}
                         length.push(context.length)
                     }
@@ -48,16 +46,15 @@
                     	}
                     	else{
                     		context = 'A, '
-                        	
                     	}
                     	length.push(context.length)
                     }
                     input.value += context
-                    console.log(context)
+                    console.log(input.value)
                     //テキスト文字の追加
                     interval_start = interval_end
                     interval_end = interval_start + length[index] //範囲の拡大
-                    
+
                     input.focus()
                     input.setSelectionRange(interval_start, interval_end) // 範囲選択の設定
                 }
