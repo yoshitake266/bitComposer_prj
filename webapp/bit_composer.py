@@ -19,13 +19,13 @@ def abc_to_note(str_note):
                 newnote += note[1] + '#'
             else:
                 newnote += note[0]
-
             if ',,' in note:
                 newnote += '2'
             elif ',' in note:
                 newnote += '3'
             else:
                 newnote += '4'
+
         
         new_spl_note.append(newnote)
 

@@ -32,15 +32,16 @@ const keyMap = [
     { pcKey: "[", pianoKey: 28 },
     { pcKey: ",", pianoKey: 29 },
 ]
+//abc記法の配列
 const abc_param = ["A,,", "^A,,", "B,,", "C,", "^C,", "D,", "^D,", "E,", "F,", "^F,", "G,", "^G,", "A,", "^A,", "B,", "C", "^C", "D", "^D", "E", "F", "^F", "G", "^G", "A", "^A", "B", "C'", "^C'", "D'"]
-const abc_leng = ["8","4","2"," ","1/2"]
-const abc_rest = "z"
-const abc_id = ["zen","2","4","8","16"]
-                                   // PCキーとピアノ鍵盤番号の紐づけ
+const abc_leng = ["8","4","2"," ","1/2"] //音符の宣言
+const abc_rest = "z"                     //休符
+const abc_id = ["zen","2","4","8","16"]  //音符と休符の配列
+                                   
 const pianoSounds = []              // Audioオブジェクト        
 const touchkeyNumlish = []          // タッチ中の鍵盤番号リスト
 let clickedKeyNum = null            // クリック中の鍵盤番号リスト
-let abc_leng_arnum = 3
+let abc_leng_arnum = 3              //
 const isKeyPressing = new Array(30) // ピアノ鍵盤ごとの押下状態
 isKeyPressing.fill(false)           // 初期値 = false            
 const intervalIds = new Array(30)   // 各オーディオフェードアウトのインターバルID
@@ -48,9 +49,10 @@ intervalIds.fill(null)              // 初期値 = null
 const pianoWrap = document.getElementById("piano-wrap")     // 鍵盤全体
 const whiteKeys = document.querySelectorAll(".white-key")   // 白鍵
 const blackKeys = document.querySelectorAll(".black-key")   // 黒鍵
+// 初期処理
 const note = ["A2","Ahan2","B2","C3","Chan3","D3","Dhan3","E3","F3","Fhan3","G3","Ghan3","A3","Ahan3","B3","C4","Chan4","D4","Dhan4","E4","F4","Fhan4","G4","Ghan4","A4","Ahan4","B4","C5","Chan5","D5"]
 
-// 初期処理
+
 
 
 
@@ -163,7 +165,7 @@ document.onkeyup = function(event) {
     } 
 }
 
-function but_leng(ele){
+function but_leng(ele){//全符　2分符　4分符　8分符
     if(ele.id == abc_id[0]){
         abc_leng_arnum = 0;
     }else if(ele.id == abc_id[1]){
@@ -177,7 +179,7 @@ function but_leng(ele){
     }
 }
 
-function but_rest(){
+function but_rest(){//休符の処理
     document.getElementById("input_notes").value += (abc_rest + abc_leng[abc_leng_arnum]);
 }
 
