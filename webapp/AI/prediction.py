@@ -7,7 +7,7 @@ from fractions import Fraction
 from random import randint
 import os
 
-def predict(user_inputs_notes):
+def predict(user_inputs_notes, user_inputs_note_length):
 
 	path = os.path.dirname(__file__) + '/'
 	#音と数のリスト、ラベルの数、モデル作成のための行列の形を読み込む
@@ -37,7 +37,7 @@ def predict(user_inputs_notes):
 	#生成した音程のリスト
 	numerical_prediction_output = input_notes
 	#生成した音の長さのリスト
-	numerical_prediction_output_length = [length_int[0.5] for i in input_notes ]
+	numerical_prediction_output_length = [length_int[nl] for nl in user_inputs_note_length]
 	input_length = numerical_prediction_output_length
 
 	#入力が10より少ないなら10音分の入力に補填
