@@ -1,7 +1,6 @@
 from flask import Flask,render_template, request, redirect,send_from_directory,redirect,url_for
 import midi2mp3
 from datetime import datetime
-from waitress import serve
 from bit_composer import parse_str_to_mid, abc_to_note
 from AI.prediction import predict
 
@@ -53,4 +52,4 @@ def bckeysyori():
     return redirect(url_for("outputmp3"))
 
 if __name__ == "__main__":
-    serve(app,host='0.0.0.0',port=5000)
+    app.run(host='0.0.0.0',port=5000)
