@@ -21,6 +21,8 @@ def abc_to_note(str_note):
             newnote += '3'
         else:
             newnote += '4'
+
+
         
         new_spl_note.append(newnote)
     return new_spl_note
