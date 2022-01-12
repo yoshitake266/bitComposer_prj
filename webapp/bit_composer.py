@@ -10,7 +10,7 @@ def abc_to_note(str_note):
     for note in abc_note:
         
         newnote = ""
-        
+        #休符
         if 'z' in note:
             newnote += "rest"
             #["8","4","2"," ","1/2"]
