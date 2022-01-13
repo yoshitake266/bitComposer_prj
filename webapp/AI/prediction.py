@@ -8,23 +8,36 @@ from random import randint
 import os
 
 def predict(user_inputs_notes, user_inputs_note_length):
-
+	print(user_inputs_notes)
+	print('--------------------')
+	print(user_inputs_note_length)
+	print('--------------------')
 	path = os.path.dirname(__file__) + '/'
 	#音と数のリスト、ラベルの数、モデル作成のための行列の形を読み込む
 	f = open(path + 'params/noteList.txt', 'rb')
 	note_int = pickle.load(f)
+	print(note_int)
+	print('--------------')
 	int2note = dict((val, key) for key,val in note_int.items())
 	f = open(path + 'params/n_len.txt', 'rb')
+	
 	n_len = pickle.load(f)
+	print(n_len)
+	print('----------------')
 	f = open(path + 'params/lengthList.txt', 'rb')
 	length_int = pickle.load(f)
+	print(length_int)
+	print('---------------')
 	int2length = dict((val, key) for key,val in length_int.items())
 	f = open(path + 'params/duration_len.txt', 'rb')
+	
 	duration_len = pickle.load(f)
-
+	print(duration_len)
+	print('-------------------')
 	f = open(path + 'params/input_shape.txt', 'rb')
 	shape = pickle.load(f)
-
+	print(shape)
+	print('---------------')
 	#モデル作成
 	model1 = model_conf.create_note_model(n_len, shape)
 	model1 = model_conf.model_load(model1, path + "checkpoint_note/cp.ckpt")
@@ -46,11 +59,13 @@ def predict(user_inputs_notes, user_inputs_note_length):
 		input_length = input_length[-11:-1]
 	elif len(input_notes) < 10:
 		for i in range(10 - len(input_notes)):
-			r = randint(0, n_len)
-			input_notes.append(int2note[r])
-			r = randint(0, duration_len)
-			input_length.append(int2length[r])
-
+			r = randint(0, n_len-1)
+			input_notes.append(note_int[int2note[r]])
+			r = randint(0, duration_len-1)
+			input_length.append(length_int[int2length[r]])
+	print(input_notes)
+	print('-----------')
+	print(input_length)
 	for note_index in range(music_length):
 
 		prediction_input_note = np.reshape(input_notes, (1, 10, 1))
