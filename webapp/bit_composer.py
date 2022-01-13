@@ -8,7 +8,7 @@ def abc_to_note(str_note):
     new_note_length = []
     new_spl_note = []
     for note in abc_note:
-        
+        print(note)
         newnote = ""
         #休符
         if 'z' in note:
