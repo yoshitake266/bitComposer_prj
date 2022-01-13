@@ -75,8 +75,8 @@
 /*abc.jsのテキストボックス*/
 #input_notes {
     position: absolute;
-    top: 0px;
-    left: 1000px;
+    top: 400px;
+    left: 0px;
     overflow: auto;
 }
 
