@@ -180,7 +180,7 @@ function but_leng(ele){//全符　2分符　4分符　8分符
 }
 
 function but_rest(){//休符の処理
-    document.getElementById("input_notes").value += (abc_rest + abc_leng[abc_leng_arnum]);
+    document.getElementById("input_notes").value += (abc_rest + abc_leng[abc_leng_arnum]) + ' ';
 }
 
 // ピアノ鍵盤を押下した時の処理
@@ -192,7 +192,7 @@ function pressPianoKey(keyNum){
         document.querySelector(`[data-key-num="${keyNum}"]`).classList.add("pressing")
         soundPlay(keyNum)
         document.getElementById("input_notes").focus()
-        document.getElementById("input_notes").value += (abc_param[keyNum] + abc_leng[abc_leng_arnum]);
+        document.getElementById("input_notes").value += (abc_param[keyNum] + abc_leng[abc_leng_arnum]) + ' ';
     }
 }
 
