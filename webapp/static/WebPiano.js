@@ -165,7 +165,7 @@ document.onkeyup = function(event) {
     } 
 }
 
-function but_leng(ele){//全符　2分符　4分符　8分符
+function but_leng(ele){//全符　2分符　4分符　8分符 の処理
     if(ele.id == abc_id[0]){
         abc_leng_arnum = 0;
     }else if(ele.id == abc_id[1]){
