@@ -5,31 +5,47 @@ def abc_to_note(str_note):
     abc_note = str_note.split(" ")
     abc_note.pop(-1)
     
+    new_note_length = []
     new_spl_note = []
     for note in abc_note:
-        
+        print(note)
+        print('-----------')
         newnote = ""
-        
-        if '^' in note:
-            newnote += note[1] + '#'
+        #休符
+        if 'z' in note:
+            newnote += "rest"
+            #["8","4","2"," ","1/2"]
         else:
-            newnote += note[0]
-
-        if ',,' in note:
-            newnote += '2'
-        elif ',' in note:
-            newnote += '3'
-        else:
-            newnote += '4'
-
-
-        
+            if '^' in note:
+                newnote += note[1] + '#'
+            else:
+                newnote += note[0]
+            if ',,' in note:
+                newnote += '2'
+            elif ',' in note:
+                newnote += '3'
+            else:
+                newnote += '4'
+        #print(newnote)
         new_spl_note.append(newnote)
-    return new_spl_note
-            
-            
-        
-    
+
+        #長さを格納
+        if re.search('[0-9]', note):
+            print('OK')
+            if '8' in note: #全音符
+                new_note_length.append(4.0)
+            elif '4' in note: #2分
+                new_note_length.append(2.0)
+            elif '2' in note: #4分
+                new_note_length.append(1.0)
+            elif '1/2' in note: #16分
+                new_note_length.append(0.25)
+        else:
+            #8分
+            new_note_length.append(0.5)
+        print(new_note_length)
+    return new_spl_note, new_note_length
+
 def parse_str_to_mid(str_note):
 
     new_spl_note = abc_to_note(str_note)
