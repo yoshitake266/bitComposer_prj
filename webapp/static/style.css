@@ -72,13 +72,15 @@
     text-align: center;
 }
 
+/*abc.jsのテキストボックス*/
 #input_notes {
     position: absolute;
-    top: 400px;
-    left: 600px;
+    top: 0px;
+    left: 1000px;
     overflow: auto;
 }
 
+/*送信ボタン*/
 #commit {
     position: absolute;
     left: 1500px;
