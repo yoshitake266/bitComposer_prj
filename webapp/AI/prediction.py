@@ -47,9 +47,10 @@ def predict(user_inputs_notes, user_inputs_note_length):
 	elif len(input_notes) < 10:
 		for i in range(10 - len(input_notes)):
 			r = randint(0, n_len)
-			input_notes.append(r)
-			#8分音符の長さ (今のところabc.jsで8分音符しか入力できない)
-			input_length.append(length_int[0.5])
+			input_notes.append(int2note[r])
+			r = randint(0, duration_len)
+			input_length.append(int2length[r])
+
 	for note_index in range(music_length):
 
 		prediction_input_note = np.reshape(input_notes, (1, 10, 1))
