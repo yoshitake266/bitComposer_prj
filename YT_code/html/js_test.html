@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script type= "text/javascript" src="js/abcjs-basic-min.js"></script>
+        <script type = "text/javascript" src="js/class.js"></script>
+    </head>
+    <body>
+        <textarea  id="p"></textarea>
+        <div id="content"></div>
+
+        <script type='text/javascript'>
+            var test = Array();
+            for(i = 0; i<10; i++){
+                test.push(new Test(i));
+            }
+            var index = 5;
+            delete test[index]; //要素の削除
+            test.forEach((ele) => {
+                ele.show();
+            })
+            new ABCJS.Editor("p", {paper_id: "content"});
+        </script>
+    </body>
+</html>
