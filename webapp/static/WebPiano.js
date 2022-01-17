@@ -203,9 +203,6 @@ function releasePianoKey(keyNum){
         isKeyPressing[keyNum] = false
         document.querySelector(`[data-key-num="${keyNum}"]`).classList.remove("pressing")
         soundStop(keyNum)
-        
-        
-        
     }
 }
 

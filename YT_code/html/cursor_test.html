@@ -1,0 +1,35 @@
+<input type="text" size=30 id="my_input" value="hogefuga">
+
+<input type="button" onclick="f()" value="キャレットの位置を取得">
+
+
+<!-- カーソルの位置が，常にここにモニタされます。 -->
+<div id="d"></div>
+
+
+<script language="JavaScript">
+
+function f()
+{
+	var elem = document.getElementById( "my_input" );
+	d.innerHTML = getCaretPositionIE( elem );
+}
+
+// 要素内のキャレット位置を取得する関数
+function getCaretPositionIE( elem )
+{
+	elem.focus();
+
+	// ボックスの先頭からキャレットまでのrangeを作って，長さを調査
+	var range = document.selection.createRange();
+	range.moveStart( "character", - elem.value.length );
+	var caret_position = range.text.length;
+
+	return caret_position;
+}
+
+// イベント割り当て
+my_input.onclick = f;
+my_input.onkeyup = f;
+
+</script>

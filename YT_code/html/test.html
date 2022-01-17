@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <script type= "text/javascript" src="js/abcjs-basic-min.js"></script>
+        <script type= "text/javascript" src="js/class.js"></script>
     </head>
     <body>
         <textarea  id="p"></textarea>
@@ -43,20 +44,23 @@
                 { pcKey: "[", pianoKey: 28 , abcKey: "^C'"},
                 { pcKey: ",", pianoKey: 29 , abcKey: "D'"},
                 { pcKey: "Delete", pianoKey: 30},
-            ]
+            ];
 
-            var interval_start = 0 //カーソル範囲のはじめ
-            var interval_end = 0  //カーソル範囲の終わり
+            var interval_start = 0; //カーソル範囲のはじめ
+            var interval_end = 0;  //カーソル範囲の終わり
             
-            var length = [0] // 入力文字の長さのリスト(intervalの保持)
-            var context = ""
-            var index = 0 
-            var input = document.getElementById("p") //テキストボックス
+            var context = "";
+            var index = 0;
+            var input = document.getElementById("p"); //テキストボックス
+            var note_list = new Array();
+            //引数: 音程,音価, カーソルはじめ, カーソル終わり
+            note_list.push('', 0, 0, 0);
 
-            function edit_note(event){
+            function edit_note(obj){
+                
                 if(obj.pianoKey > 29){
                     if(index > 0){
-                    	length.pop()
+                        delete note_list[index];
                         interval_end = interval_start
                         input.value = input.value.slice(0, interval_end) //テキスト文字の削減
                         interval_start = interval_end - length[--index] //範囲の削減
@@ -68,43 +72,41 @@
                     }
                 }
                 else{
-                    console.log(event.key)
-                    index++
-                    context = 'A '
-                    if(event.key === "a"){
-                    	if(index % 15 === 0){
-                    		context +='\n'
-                    	}
-                        length.push(context.length)
-                    }
-                    else if(event.key === "b"){
-                    	if(index % 15 === 0){
-                    		context = 'A, \n'
-                    	}
-                    	else{
-                    		context = 'A, '
-                    	}
-                    	length.push(context.length)
-                    }
-                    input.value += context
-                    console.log(input.value)
+                    console.log(obj.abcKey)
+                    context = obj.abcKey + ' '
                     //テキスト文字の追加
-                    interval_start = interval_end
-                    interval_end = interval_start + length[index] //範囲の拡大
+                    interval_start = interval_end;
+                    interval_end = interval_start + context.length;
 
+                    note_list.push(new Note(context, 0, interval_start, interval_end))
+                    // //15
+                    // if(index % 15 === 0){
+                    //     context +='\n'
+                    // }
+                    
+                    input.value += context;
                     input.focus()
                     input.setSelectionRange(interval_start, interval_end) // 範囲選択の設定
                 }
-                event.preventDefault(); //key入力無効
             }
             
             document.onkeydown = function(event){
                 const obj = keyMap.find((item) => item.pcKey == event.key)
                 if(typeof obj !== "undefined"){
-
+                    edit_note(obj)
+                    event.preventDefault(); //key入力無効
                 }
-                
             }
+
+            document.onclick = function(event){
+                if(document.activeElement.id === "p"){
+                    input.setSelectionRange //テキストボックスのカーソル位置を取得
+                    foreach(note in note_list){
+                        if(note.get_e_pos >= )
+                    }
+                }
+            }
+            //送信ボタンを押したらclassから取り出す
             new ABCJS.Editor("p", {paper_id: "content"});
         </script>
     </body>
