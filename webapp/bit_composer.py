@@ -1,4 +1,4 @@
-from music21 import converter, instrument, note, chord, stream
+from music21 import converter, instrument, note, chord, stream, tempo
 import re
 
 def abc_to_note(str_note):
@@ -41,7 +41,7 @@ def abc_to_note(str_note):
             new_note_length.append(0.5)
     return new_spl_note, new_note_length
 
-def parse_str_to_mid(str_note):
+def parse_str_to_mid(str_note,tempo):
 
     new_spl_note = abc_to_note(str_note)
     NoteList = []
@@ -53,4 +53,6 @@ def parse_str_to_mid(str_note):
         NoteList.append(mid_note)
         offset += 0.5
     Strmidi = stream.Stream(NoteList)
+    mm = tempo.MetronomeMark(number=tempo)
+    Strmidi.append(mm)
     Strmidi.write('midi', fp=r'static\media\out.mid')

@@ -5,19 +5,56 @@
         <script type= "text/javascript" src="js/abcjs-basic-min.js"></script>
     </head>
     <body>
-        <textarea  id="p" readonly="readonly" ></textarea>
+        <textarea  id="p"></textarea>
         <div id="content"></div>
         <script type='text/javascript'>
+            //"A,,", "^A,,", "B,,", "C,", "^C,", "D,", "^D,", "E,", "F,", "^F,", "G,",
+            // "^G,", "A,", "^A,", "B,", "C", "^C", "D", "^D", "E", "F", "^F", "G", "^G",
+            //"A", "^A", "B", "C'", "^C'", "D'"
+            const keyMap = [
+                { pcKey: "a", pianoKey: 0 , abcKey: "A,,"},
+                { pcKey: "q", pianoKey: 1 , abcKey: "^A,,"},
+                { pcKey: "s", pianoKey: 2 , abcKey: "B,,"},
+                { pcKey: "d", pianoKey: 3 , abcKey: "C,"},
+                { pcKey: "w", pianoKey: 4 , abcKey: "^C,"},
+                { pcKey: "f", pianoKey: 5 , abcKey: "D,"},
+                { pcKey: "e", pianoKey: 6 , abcKey: "^D,"},
+                { pcKey: "g", pianoKey: 7 , abcKey: "E,"},
+                { pcKey: "h", pianoKey: 8 , abcKey: "F,"},
+                { pcKey: "r", pianoKey: 9 , abcKey: "^F,"},
+                { pcKey: "j", pianoKey: 10 , abcKey: "G,"},
+                { pcKey: "t", pianoKey: 11 , abcKey: "^G,"},
+                { pcKey: "k", pianoKey: 12 , abcKey: "A,"},
+                { pcKey: "y", pianoKey: 13 , abcKey: "^A,"},
+                { pcKey: "l", pianoKey: 14 , abcKey: "B,"},
+                { pcKey: ";", pianoKey: 15 , abcKey: "C"},
+                { pcKey: "u", pianoKey: 16 , abcKey: "^C"},
+                { pcKey: "z", pianoKey: 17 , abcKey: "D"},
+                { pcKey: "i", pianoKey: 18 , abcKey: "^D"},
+                { pcKey: "x", pianoKey: 19 , abcKey: "E"},
+                { pcKey: "c", pianoKey: 20 , abcKey: "F"},
+                { pcKey: "o", pianoKey: 21 , abcKey: "^F"},
+                { pcKey: "v", pianoKey: 22 , abcKey: "G"},
+                { pcKey: "p", pianoKey: 23 , abcKey: "^G"},
+                { pcKey: "b", pianoKey: 24 , abcKey: "A"},
+                { pcKey: "@", pianoKey: 25 , abcKey: "^A"},
+                { pcKey: "n", pianoKey: 26 , abcKey: "B"},
+                { pcKey: "m", pianoKey: 27 , abcKey: "C'"},
+                { pcKey: "[", pianoKey: 28 , abcKey: "^C'"},
+                { pcKey: ",", pianoKey: 29 , abcKey: "D'"},
+                { pcKey: "Delete", pianoKey: 30},
+            ]
+
             var interval_start = 0 //カーソル範囲のはじめ
             var interval_end = 0  //カーソル範囲の終わり
+            
             var length = [0] // 入力文字の長さのリスト(intervalの保持)
             var context = ""
             var index = 0 
             var input = document.getElementById("p") //テキストボックス
 
-            document.onkeydown = function(event){
-                if(event.key === ("Delete")){
-                    console.log(event.key)
+            function edit_note(event){
+                if(obj.pianoKey > 29){
                     if(index > 0){
                     	length.pop()
                         interval_end = interval_start
@@ -58,6 +95,15 @@
                     input.focus()
                     input.setSelectionRange(interval_start, interval_end) // 範囲選択の設定
                 }
+                event.preventDefault(); //key入力無効
+            }
+            
+            document.onkeydown = function(event){
+                const obj = keyMap.find((item) => item.pcKey == event.key)
+                if(typeof obj !== "undefined"){
+
+                }
+                
             }
             new ABCJS.Editor("p", {paper_id: "content"});
         </script>

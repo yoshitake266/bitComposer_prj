@@ -1,4 +1,4 @@
-from music21 import instrument, note, chord, stream
+from music21 import instrument, note, chord, stream,tempo
 from tensorflow import keras
 import numpy as np
 import pickle
@@ -7,7 +7,11 @@ from fractions import Fraction
 from random import randint
 import os
 
-def predict(user_inputs_notes, user_inputs_note_length):
+def predict(user_inputs_notes, user_inputs_note_length,bpm):
+	print(user_inputs_notes)
+	print('--------------------')
+	print(user_inputs_note_length)
+	print('--------------------')
 	path = os.path.dirname(__file__) + '/'
 	#音と数のリスト、ラベルの数、モデル作成のための行列の形を読み込む
 	f = open(path + 'params/noteList.txt', 'rb')
@@ -92,6 +96,8 @@ def predict(user_inputs_notes, user_inputs_note_length):
 
 	offset = 0.0 #音のタイミング
 	prediction_output = [] #midi note
+	mm = tempo.MetronomeMark(number=bpm)
+	prediction_output.append(mm)
 
 	#midi生成
 	for string_note in string_prediction_output:

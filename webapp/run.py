@@ -45,9 +45,9 @@ def bckeysyori():
     if request.method == "POST":
         moji = request.form['onpu']
         bpm = request.form['bpm']
+        int_bpm = int(bpm)
         notes,note_length = abc_to_note(moji)
-        predict(notes, note_length)
-        
+        predict(notes, note_length,int_bpm)
         midi2mp3.output()
     return redirect(url_for("outputmp3"))
 
