@@ -1,6 +1,5 @@
 .vscode/
 __pycache__/
+media/
 *.py[cod]
 *$py.class
-*.mp3
-out.mid
