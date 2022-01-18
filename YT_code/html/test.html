@@ -6,7 +6,7 @@
         <script type= "text/javascript" src="js/class.js"></script>
     </head>
     <body>
-        <textarea  id="p"></textarea>
+        <textarea  id="p" readonly="readonly"></textarea>
         <div id="content"></div>
         <script type='text/javascript'>
             //"A,,", "^A,,", "B,,", "C,", "^C,", "D,", "^D,", "E,", "F,", "^F,", "G,",
@@ -49,12 +49,13 @@
             var interval_start = 0; //カーソル範囲のはじめ
             var interval_end = 0;  //カーソル範囲の終わり
             
+            var innerText = "";
             var context = "";
             var index = 0;
             var input = document.getElementById("p"); //テキストボックス
             var note_list = new Array();
             //引数: 音程,音価, カーソルはじめ, カーソル終わり
-            note_list.push('', 0, 0, 0);
+            note_list.push(new Note('', 0, 0, 0));
 
             function edit_note(obj){
                 
@@ -72,19 +73,32 @@
                     }
                 }
                 else{
-                    console.log(obj.abcKey)
                     context = obj.abcKey + ' '
                     //テキスト文字の追加
                     interval_start = interval_end;
                     interval_end = interval_start + context.length;
 
-                    note_list.push(new Note(context, 0, interval_start, interval_end))
+                    index++;
+                    note_list.splice(index, 0, new Note(context, 0, interval_start, interval_end))
+                    
+
+                    console.log(index);
                     // //15
                     // if(index % 15 === 0){
                     //     context +='\n'
                     // }
                     
-                    input.value += context;
+                    //テキストを再配置
+                    innerText ="";
+                    note_list.forEach(element => {
+                        innerText += element.get_note;
+                    });
+                    input.value = innerText;
+
+                    for(i = index+1; i < note_list.length; i++){
+                        note_list[i].set_s_pos = note_list[i-1].get_e_pos;
+                        note_list[i].set_e_pos = note_list[i].get_s_pos + context.length;
+                    }
                     input.focus()
                     input.setSelectionRange(interval_start, interval_end) // 範囲選択の設定
                 }
@@ -95,15 +109,29 @@
                 if(typeof obj !== "undefined"){
                     edit_note(obj)
                     event.preventDefault(); //key入力無効
+                    console.log('OK')
                 }
             }
 
             document.onclick = function(event){
                 if(document.activeElement.id === "p"){
                     input.setSelectionRange //テキストボックスのカーソル位置を取得
-                    foreach(note in note_list){
-                        if(note.get_e_pos >= )
+                    // console.log(input.selectionStart)
+                    // console.log(input.selectionEnd)
+                    // console.log('--------------------------')
+                    console.log(index)
+                    for(i = 0; i < note_list.length; i++){
+                        
+                        if(note_list[i].get_s_pos <= input.selectionStart
+                        && note_list[i].get_e_pos >= input.selectionEnd){
+                            index = i;
+                            break;
+                        }
                     }
+                    
+                    interval_start = note_list[index].get_s_pos;
+                    interval_end = note_list[index].get_e_pos;
+                    
                 }
             }
             //送信ボタンを押したらclassから取り出す

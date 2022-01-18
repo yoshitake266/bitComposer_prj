@@ -6,23 +6,23 @@ class Note{
         this.e_pos = e_pos; //カーソル範囲(終わり)
     }
     
-    get_note(){
+    get get_note(){
         return this.note;
     }
-    get_duration(){
+    get get_duration(){
         return this.duration;
     }
-    get_s_pos(){
+    get get_s_pos(){
         return this.s_pos;
     }
-    get_e_pos(){
+    get get_e_pos(){
         return this.e_pos;
     }
     
-    set_s_pos(value){
+    set set_s_pos(value){
         this.s_pos = value;
     }
-    set_e_pos(value){
+    set set_e_pos(value){
         this.e_pos = value;
     }
 }
