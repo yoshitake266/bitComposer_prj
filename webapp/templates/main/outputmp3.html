@@ -1,6 +1,23 @@
 {% extends "bcbase.html" %}
-
+  <link rel="stylesheet" href="webapp\static\css\loading.css" >
+  <script src=”https://code.jquery.com/jquery-3.5.1.min.js”></script> 
+  <script src="webapp\static\js\load.js"></script>
+  
 {% block content %}
+<body>
+  <!-- LOADING DOTS... -->
+ <div id="loading">
+    <h1 style="font-size: 9em;">loading</h1>
+          <class class="spinner-box"><div>
+             <div class="pulse-container"> 
+                <div class="pulse-bubble pulse-bubble-1"></div>
+                <div class="pulse-bubble pulse-bubble-2"></div>
+                <div class="pulse-bubble pulse-bubble-3"></div> 
+             </div>
+          </div>
+          </class> 
+ </div>
+</body>
 <p><audio controls src={{ url_for('static', filename='media/out.mp3')}}></p>
 <p><a href="../../static/media/out.mp3" download="out.mp3" class="h2 text-info">mp3をダウンロード</a></p>
 <p><a href="../../static/media/out.mid" download="out.mid" class="h2 text-info">midiをダウンロード</a></p>
