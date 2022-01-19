@@ -139,5 +139,6 @@ def predict(user_inputs_notes, user_inputs_note_length,bpm):
 			offset += note_length
 
 	#midiの作成
+	print(prediction_output)
 	midi_stream = stream.Stream(prediction_output)
 	midi_stream.write('midi', fp=path + '../static/media/out.mid')
