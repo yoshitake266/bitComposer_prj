@@ -57,6 +57,21 @@
             //引数: 音程,音価, カーソルはじめ, カーソル終わり
             note_list.push(new Note('', 0, 0, 0));
 
+            function sort_insert(index, list, li_len, text_length){
+            	console.log('--1')
+            	for(i = li_len-1; i > index; i--){
+            		console.log(i)
+            		obj = list[i-1];
+	            	list[i-1] = list[i];
+	            	list[i] = obj;
+            		list[i].set_s_pos = list[i].get_s_pos + text_length;
+            		list[i].set_e_pos = list[i].get_e_pos + text_length;
+            		console.log(list[i].get_s_pos)
+            		console.log(list[i].get_e_pos)
+            	}
+            	
+
+            }
             function edit_note(obj){
                 
                 if(obj.pianoKey > 29){
@@ -78,28 +93,26 @@
                     interval_start = interval_end;
                     interval_end = interval_start + context.length;
 
+                    note_list.push(new Note(context, 0, interval_start, interval_end))
+                    console.log('--2')
+					console.log("はじめ" + interval_start)
+        			console.log("終わり" + interval_end)                    
+
+                    
                     index++;
-                    note_list.splice(index, 0, new Note(context, 0, interval_start, interval_end))
-                    
+                    console.log('--3')
                     console.log(index);
-                    // //15
-                    // if(index % 15 === 0){
-                    //     context +='\n'
-                    // }
-                    
+                    if(index != note_list.length){
+                    	sort_insert(index, note_list, note_list.length, context.length)
+                    }
                     //テキストを再配置
                     innerText ="";
                     note_list.forEach(element => {
                         innerText += element.get_note;
                     });
                     input.value = innerText;
-
-                    for(i = index+1; i < note_list.length; i++){
-                        note_list[i].set_s_pos = note_list[i-1].get_e_pos;
-                        note_list[i].set_e_pos = note_list[i].get_s_pos + context.length;
-                    }
-                    input.focus()
                     input.setSelectionRange(interval_start, interval_end) // 範囲選択の設定
+                    input.focus()
                 }
             }
             
@@ -108,21 +121,22 @@
                 if(typeof obj !== "undefined"){
                     edit_note(obj)
                     event.preventDefault(); //key入力無効
-                    console.log('OK')
+
                 }
             }
 
             document.onclick = function(event){
                 if(document.activeElement.id === "p"){
                     input.setSelectionRange //テキストボックスのカーソル位置を取得
-                    // console.log(input.selectionStart)
-                    // console.log(input.selectionEnd)
-                    // console.log('--------------------------')
-                    console.log(index)
+                    console.log('--4')
+                    console.log(input.selectionStart)
+                    console.log(input.selectionEnd)
                     for(i = 0; i < note_list.length; i++){
-                        
-                        if(note_list[i].get_s_pos <= input.selectionStart
-                        && note_list[i].get_e_pos >= input.selectionEnd){
+                        console.log('--5')
+                        console.log('i = ' + note_list[i].get_s_pos)
+                        console.log('e = ' + note_list[i].get_e_pos)
+                        if(note_list[i].get_s_pos === input.selectionStart
+                        && note_list[i].get_e_pos === input.selectionEnd){
                             index = i;
                             break;
                         }
@@ -130,7 +144,10 @@
                     
                     interval_start = note_list[index].get_s_pos;
                     interval_end = note_list[index].get_e_pos;
-                    
+                    console.log('--6')
+                    console.log(index)
+                    console.log("はじめ" + interval_start)
+                	console.log("終わり" + interval_end)
                 }
             }
             //送信ボタンを押したらclassから取り出す
