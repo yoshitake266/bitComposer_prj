@@ -1,0 +1,80 @@
+#loader-bg{
+display: none;
+position: fixed;
+width: 100%;
+height: 100%;
+top: 0px;
+  left: 0px;
+  background: rgb(4, 132, 172);
+  z-index: 1;
+}
+#loader {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  margin-top: -100px;
+  margin-left: -100px;
+  text-align: center;
+  color: #fff;
+  z-index: 2;
+}
+@keyframes pulse {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: .20;
+    transform: scale(.4);
+  }
+}
+
+
+.spinner-box {
+  width: 50%;
+  margin: 0 auto;
+  max-width: 500px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+}
+
+
+
+
+/* PULSE BUBBLES */
+h1{
+  margin: 100px;
+
+}
+.pulse-container {
+  margin:20px;
+  padding: 20px;
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pulse-bubble {
+  width: 12000px;
+  height: 100px;
+  border-radius: 100%;
+  background-color: #094ac2f6;
+}
+
+.pulse-bubble-1 {
+    animation: pulse .4s ease 0s infinite alternate;
+}
+.pulse-bubble-2 {
+    animation: pulse .4s ease .10s infinite alternate;
+}
+.pulse-bubble-3 {
+    animation: pulse .4s ease .20s infinite alternate;
+}
+
