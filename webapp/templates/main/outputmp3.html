@@ -1,11 +1,14 @@
 {% extends "bcbase.html" %}
 <!DOCTYPE html>
   <head>
-    <link rel="stlesheet" href="/load.css">
-    <script src ="/loading.js"></script>
+    <meta charset = 'utf-8'>
+    
+    
 {% block content %}
     <!--ロード前-->
+    <p><audio controls src={{ url_for('static', filename='/load.css')}}></p>
 <body>
+  
   <div id="loader-bg">
     <div id="loader">
       <img src="/loader.gif" width="80" height="80"  />
@@ -17,6 +20,7 @@
         <p><a href="../../static/media/out.mid" download="out.mid" class="h2 text-info">midiをダウンロード</a></p>
         <p><a href="../../static/media/out.wav" download="out.wav" class="h2 text-info">wavをダウンロード
     </a></p>
+      <script src ="/loading.js"></script>
     </div>
 
 
