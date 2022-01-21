@@ -2,10 +2,9 @@
 
 {% block content %}
 <p><audio controls src={{ url_for('static', filename='media/out.mp3')}}></p>
-<p><a href="../../static/media/out.mp3" download="out.mp3" class="h2 text-info">mp3をダウンロード</a></p>
-<p><a href="../../static/media/out.mid" download="out.mid" class="h2 text-info">midiをダウンロード</a></p>
-<p><a href="../../static/media/out.wav" download="out.wav" class="h2 text-info">wavをダウンロード
-</a></p>
+<p><a href="../../static/media/out.mp3" download="out.mp3" class="h2 link-primary">mp3をダウンロード</a></p>
+<p><a href="../../static/media/out.mid" download="out.mid" class="h2 link-primary">midiをダウンロード</a></p>
+<p><a href="../../static/media/out.wav" download="out.wav" class="h2 link-primary">wavをダウンロード</a></p>
 
 <p><a href="{{ url_for('welcome') }}">戻る</a></p>
 

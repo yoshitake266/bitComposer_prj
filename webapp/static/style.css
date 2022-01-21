@@ -87,13 +87,18 @@
 }
 
 .bckey_title {
-    color: green;
+    color: black;
 }
 
 .bckey_bg {
-    background-color: orange;
+    background-color: lightgray;
 }
 
 .base_title {
-    color: lime;
+    color: orange;
+}
+
+.base_pic {
+    background: url("bg_note.png");
+    background-size: 50% 60%;
 }
