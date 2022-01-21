@@ -6,9 +6,9 @@
         <link rel="stylesheet" href="../static/style.css">
         <title>{{ title }}</title>
     </head>
-    <body class="bg-success">
+    <body class="bckey_bg">
         <script src="../static/js/bootstrap.bundle.js"></script>
-        <h1 class="text-center text-danger">{{ page_title }}</h1>
+        <h1 class="text-center bckey_title">{{ page_title }}</h1>
         <hr>
         {% block content %}{% endblock %}
         <script src="{{ url_for('static', filename='WebPiano.js') }}"></script>

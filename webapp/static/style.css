@@ -85,3 +85,11 @@
     position: absolute;
     left: 1500px;
 }
+
+.bckey_title {
+    color: green;
+}
+
+.bckey_bg {
+    background-color: orange;
+}
