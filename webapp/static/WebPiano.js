@@ -1,37 +1,98 @@
+//  音符
+class Note{
+    constructor(note, duration, s_pos){
+        this.note = note;
+        this.duration = set_duration(duration);
+        this.s_pos = s_pos; //カーソル範囲(はじめ)
+        this.e_pos = s_pos + note.length; //カーソル範囲(終わり)
+    }
+    
+    get get_note(){
+        return this.note;
+    }
+    get get_duration(){
+        return this.duration;
+    }
+    get get_s_pos(){
+        return this.s_pos;
+    }
+    get get_e_pos(){
+        return this.e_pos;
+    }
+    
+    set set_s_pos(value){
+        this.s_pos = value;
+    }
+    set set_e_pos(value){
+        this.e_pos = value;
+    }
+
+    set_duration(duration){
+        re_duration = ""
+        switch(duration){
+            case "8":
+                re_duration=4.0;
+                break;
+            case "4":
+                re_duration=2.0;
+                break;
+            case "2":
+                re_duration=1.0;
+                break;
+            case "":
+                re_duration=0.5;
+                break;
+            case "1/2":
+                re_duration=0.25;
+
+        }
+        return re_duration
+    }
+}
+
 // 変数宣言
 const path = "static/audio/"             // オーディオファイルのパス
 const keyMap = [
-    { pcKey: "a", pianoKey: 0 },
-    { pcKey: "q", pianoKey: 1 },
-    { pcKey: "s", pianoKey: 2 },
-    { pcKey: "d", pianoKey: 3 },
-    { pcKey: "w", pianoKey: 4 },
-    { pcKey: "f", pianoKey: 5 },
-    { pcKey: "e", pianoKey: 6 },
-    { pcKey: "g", pianoKey: 7 },
-    { pcKey: "h", pianoKey: 8 },
-    { pcKey: "r", pianoKey: 9 },
-    { pcKey: "j", pianoKey: 10 },
-    { pcKey: "t", pianoKey: 11 },
-    { pcKey: "k", pianoKey: 12 },
-    { pcKey: "y", pianoKey: 13 },
-    { pcKey: "l", pianoKey: 14 },
-    { pcKey: ";", pianoKey: 15 },
-    { pcKey: "u", pianoKey: 16 },
-    { pcKey: "z", pianoKey: 17 },
-    { pcKey: "i", pianoKey: 18 },
-    { pcKey: "x", pianoKey: 19 },
-    { pcKey: "c", pianoKey: 20 },
-    { pcKey: "o", pianoKey: 21 },
-    { pcKey: "v", pianoKey: 22 },
-    { pcKey: "p", pianoKey: 23 },
-    { pcKey: "b", pianoKey: 24 },
-    { pcKey: "@", pianoKey: 25 },
-    { pcKey: "n", pianoKey: 26 },
-    { pcKey: "m", pianoKey: 27 },
-    { pcKey: "[", pianoKey: 28 },
-    { pcKey: ",", pianoKey: 29 },
-]
+                { pcKey: "a", pianoKey: 0 , abcKey: "A,,"},
+                { pcKey: "q", pianoKey: 1 , abcKey: "^A,,"},
+                { pcKey: "s", pianoKey: 2 , abcKey: "B,,"},
+                { pcKey: "d", pianoKey: 3 , abcKey: "C,"},
+                { pcKey: "w", pianoKey: 4 , abcKey: "^C,"},
+                { pcKey: "f", pianoKey: 5 , abcKey: "D,"},
+                { pcKey: "e", pianoKey: 6 , abcKey: "^D,"},
+                { pcKey: "g", pianoKey: 7 , abcKey: "E,"},
+                { pcKey: "h", pianoKey: 8 , abcKey: "F,"},
+                { pcKey: "r", pianoKey: 9 , abcKey: "^F,"},
+                { pcKey: "j", pianoKey: 10 , abcKey: "G,"},
+                { pcKey: "t", pianoKey: 11 , abcKey: "^G,"},
+                { pcKey: "k", pianoKey: 12 , abcKey: "A,"},
+                { pcKey: "y", pianoKey: 13 , abcKey: "^A,"},
+                { pcKey: "l", pianoKey: 14 , abcKey: "B,"},
+                { pcKey: ";", pianoKey: 15 , abcKey: "C"},
+                { pcKey: "u", pianoKey: 16 , abcKey: "^C"},
+                { pcKey: "z", pianoKey: 17 , abcKey: "D"},
+                { pcKey: "i", pianoKey: 18 , abcKey: "^D"},
+                { pcKey: "x", pianoKey: 19 , abcKey: "E"},
+                { pcKey: "c", pianoKey: 20 , abcKey: "F"},
+                { pcKey: "o", pianoKey: 21 , abcKey: "^F"},
+                { pcKey: "v", pianoKey: 22 , abcKey: "G"},
+                { pcKey: "p", pianoKey: 23 , abcKey: "^G"},
+                { pcKey: "b", pianoKey: 24 , abcKey: "A"},
+                { pcKey: "@", pianoKey: 25 , abcKey: "^A"},
+                { pcKey: "n", pianoKey: 26 , abcKey: "B"},
+                { pcKey: "m", pianoKey: 27 , abcKey: "C'"},
+                { pcKey: "[", pianoKey: 28 , abcKey: "^C'"},
+                { pcKey: ",", pianoKey: 29 , abcKey: "D'"},
+                { pcKey: "Delete", pianoKey: 30},
+            ]
+var interval_start = 0 //カーソル範囲のはじめ
+var interval_end = 0  //カーソル範囲の終わり
+var context = "" // noteの文字列
+var index = 0 //note_list参照用
+var input = document.getElementById("input_notes") //テキストボックス
+var note_list = new Array()
+note_list.push(new Note("", 0, 0));
+
 //abc記法の配列
 const abc_param = ["A,,", "^A,,", "B,,", "C,", "^C,", "D,", "^D,", "E,", "F,", "^F,", "G,", "^G,", "A,", "^A,", "B,", "C", "^C", "D", "^D", "E", "F", "^F", "G", "^G", "A", "^A", "B", "C'", "^C'", "D'"]
 const abc_leng = ["8","4","2","","1/2"] //音符の宣言
@@ -51,11 +112,6 @@ const whiteKeys = document.querySelectorAll(".white-key")   // 白鍵
 const blackKeys = document.querySelectorAll(".black-key")   // 黒鍵
 // 初期処理
 const note = ["A2","Ahan2","B2","C3","Chan3","D3","Dhan3","E3","F3","Fhan3","G3","Ghan3","A3","Ahan3","B3","C4","Chan4","D4","Dhan4","E4","F4","Fhan4","G4","Ghan4","A4","Ahan4","B4","C5","Chan5","D5"]
-
-
-
-
-
 
 // Audioオブジェクトを作成セット
 for ( var no of note ){
@@ -112,7 +168,7 @@ function handleTouchEvents(event){
         event.preventDefault();
     }
     const BeforeKeyNumllish = JSON.parse(JSON.stringify(touchkeyNumlish)) 
-    console.log(BeforeKeyNumllish)
+    // console.log(BeforeKeyNumllish)
     touchKeyNullish.length = 0
 
     // 各接触ポイントから押下中の鍵盤番号リストを作成
@@ -141,6 +197,73 @@ function handleTouchEvents(event){
     }
 }
 
+//音符クリック時
+document.onclick = function(event){
+    if(document.activeElement.id === "input_notes"){
+        input.setSelectionRange //テキストボックスのカーソル位置を取得
+
+        for(i = 0; i < note_list.length; i++){
+            if(note_list[i].get_s_pos === input.selectionStart
+            && note_list[i].get_e_pos >= input.selectionEnd){
+                index = i;
+                break;
+            }
+        }
+        
+        interval_start = note_list[index].get_s_pos;
+        interval_end = note_list[index].get_e_pos;
+        
+    }
+}
+
+//音符挿入時の並べ替え
+function sort_insert(index, list, li_len, text_length){
+    for(i = li_len-1; i > index; i--){
+        obj = list[i-1];
+        list[i-1] = list[i];
+        list[i] = obj;
+        list[i].set_s_pos = list[i].get_s_pos + text_length;
+        list[i].set_e_pos = list[i].get_e_pos + text_length;
+    }               
+}
+
+//音符delete時の並べ替え
+function sort_delete(index, list, text_length){
+    for(i = index; i < list.length; i++){
+        list[i].set_s_pos = list[i].get_s_pos - text_length;
+        list[i].set_e_pos = list[i].get_e_pos - text_length;
+    }
+    note_list.splice(index, 1)
+}
+
+//テキストボックスの編集
+function edit_note(abcKey){
+                
+    if(abcKey === "Delete"){
+        if(index > 0){
+            sort_delete(index, note_list, note_list[index].get_note.length)
+            index--; //範囲の削減
+        }
+    }
+    else{
+        context = abcKey + abc_leng[abc_leng_arnum] + ' '
+        note_list.push(new Note(context, abc_leng[abc_leng_arnum], note_list[index].get_e_pos))
+        index++;
+        sort_insert(index, note_list, note_list.length, context.length)
+    }
+
+    interval_start = note_list[index].get_s_pos
+    interval_end = note_list[index].get_e_pos
+
+    innerText ="";
+    note_list.forEach(element => {
+        innerText += element.get_note;
+    });
+    input.value = innerText;
+    input.setSelectionRange(interval_start, interval_end)
+    input.focus()
+    event.preventDefault(); //key入力無効
+}
 // 押した時の処理
 document.onkeydown = function(event) {
     
@@ -160,8 +283,7 @@ document.onkeyup = function(event) {
     const obj = keyMap.find( (item) => item.pcKey === event.key )
     if ( typeof obj !== "undefined" ){
         // keyMapに含まれるキーの場合は後続処理実行
-        releasePianoKey(obj.pianoKey)
-        
+        releasePianoKey(obj.abcKey, obj.pianoKey)
     } 
 }
 
@@ -180,7 +302,7 @@ function but_leng(ele){//全符　2分符　4分符　8分符 の処理
 }
 
 function but_rest(){//休符の処理
-    document.getElementById("input_notes").value += (abc_rest + abc_leng[abc_leng_arnum]) + ' ';
+    edit_note(abc_rest)
 }
 
 // ピアノ鍵盤を押下した時の処理
@@ -191,21 +313,17 @@ function pressPianoKey(keyNum){
         isKeyPressing[keyNum] = true
         document.querySelector(`[data-key-num="${keyNum}"]`).classList.add("pressing")
         soundPlay(keyNum)
-        document.getElementById("input_notes").focus()
-        document.getElementById("input_notes").value += (abc_param[keyNum] + abc_leng[abc_leng_arnum]) + ' ';
     }
 }
 
 // ピアノ鍵盤をはなした時の処理
-function releasePianoKey(keyNum){
-    if ( isKeyPressing[keyNum] ){
+function releasePianoKey(abcKey, keyNum){
+    if ( isKeyPressing[obj.keyNum] ){
         // 鍵盤を押している場合のみ続行
         isKeyPressing[keyNum] = false
         document.querySelector(`[data-key-num="${keyNum}"]`).classList.remove("pressing")
         soundStop(keyNum)
-        
-        
-        
+        edit_note(abcKey)
     }
 }
 
