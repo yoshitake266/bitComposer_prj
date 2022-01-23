@@ -1,8 +1,28 @@
 //  音符
 class Note{
+
+
     constructor(note, duration, s_pos){
         this.note = note;
-        this.duration = set_duration(duration);
+        var re_duration="";
+        switch(duration){
+            case "8":
+                re_duration=4.0;
+                break;
+            case "4":
+                re_duration=2.0;
+                break;
+            case "2":
+                re_duration=1.0;
+                break;
+            case "":
+                re_duration=0.5;
+                break;
+            case "1/2":
+                re_duration=0.25;
+
+        }
+        this.duration = re_duration;
         this.s_pos = s_pos; //カーソル範囲(はじめ)
         this.e_pos = s_pos + note.length; //カーソル範囲(終わり)
     }
@@ -25,28 +45,6 @@ class Note{
     }
     set set_e_pos(value){
         this.e_pos = value;
-    }
-
-    set_duration(duration){
-        re_duration = ""
-        switch(duration){
-            case "8":
-                re_duration=4.0;
-                break;
-            case "4":
-                re_duration=2.0;
-                break;
-            case "2":
-                re_duration=1.0;
-                break;
-            case "":
-                re_duration=0.5;
-                break;
-            case "1/2":
-                re_duration=0.25;
-
-        }
-        return re_duration
     }
 }
 
