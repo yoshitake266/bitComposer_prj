@@ -95,10 +95,16 @@
 }
 
 .base_title {
-    color: orange;
+    color: black;
 }
 
 .base_pic {
     background: url("bg_note.png");
     background-size: 50% 60%;
+    background-color: lightgray;
+}
+
+.base_bc_pic {
+    width: 500px;
+    height: 500px;
 }
