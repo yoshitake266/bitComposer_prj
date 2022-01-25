@@ -1,28 +1,7 @@
-//  音符
 class Note{
-
-
     constructor(note, duration, s_pos){
         this.note = note;
-        var re_duration="";
-        switch(duration){
-            case "8":
-                re_duration=4.0;
-                break;
-            case "4":
-                re_duration=2.0;
-                break;
-            case "2":
-                re_duration=1.0;
-                break;
-            case "":
-                re_duration=0.5;
-                break;
-            case "1/2":
-                re_duration=0.25;
-
-        }
-        this.duration = re_duration;
+        this.duration = duration;
         this.s_pos = s_pos; //カーソル範囲(はじめ)
         this.e_pos = s_pos + note.length; //カーソル範囲(終わり)
     }
@@ -81,7 +60,7 @@ const keyMap = [
                 { pcKey: "m", pianoKey: 27 , abcKey: "C'"},
                 { pcKey: "[", pianoKey: 28 , abcKey: "^C'"},
                 { pcKey: ",", pianoKey: 29 , abcKey: "D'"},
-                { pcKey: "Delete", pianoKey: 30},
+                { pcKey: "Delete", pianoKey: 30, abcKey: "Delete"},
             ]
 var interval_start = 0 //カーソル範囲のはじめ
 var interval_end = 0  //カーソル範囲の終わり
@@ -90,6 +69,7 @@ var index = 0 //note_list参照用
 var input = document.getElementById("input_notes") //テキストボックス
 var note_list = new Array()
 note_list.push(new Note("", 0, 0));
+var mouse_flag = false;
 
 //abc記法の配列
 const abc_param = ["A,,", "^A,,", "B,,", "C,", "^C,", "D,", "^D,", "E,", "F,", "^F,", "G,", "^G,", "A,", "^A,", "B,", "C", "^C", "D", "^D", "E", "F", "^F", "G", "^G", "A", "^A", "B", "C'", "^C'", "D'"]
@@ -127,9 +107,9 @@ if (window.ontouchstart === null) {
     pianoWrap.addEventListener("touchcancel", function(){ handleTouchEvents() }) 
 } else {
     // タッチ非対応：マウスイベントのリスナーをセット
-    pianoWrap.addEventListener("mousedown", function(){ handleMouseEvents() })
-    pianoWrap.addEventListener("mouseup", function(){ handleMouseEvents() })
-    window.addEventListener("mousemove", function(){ handleMouseEvents() })
+    pianoWrap.addEventListener("mousedown", function(){ handleMouseEvents(event) })
+    pianoWrap.addEventListener("mouseup", function(){ handleMouseEvents(event) })
+    window.addEventListener("mousemove", function(){ handleMouseEvents(event) })
 } 
 
 // 座標(x,y)に応じた鍵盤番号を取得
@@ -193,6 +173,47 @@ function handleTouchEvents(event){
             releasePianoKey(BeforeKeyNullish[i]) 
         }
     }
+}
+
+// マウスイベント発生時の処理
+function handleMouseEvents(event){
+    
+    // 左クリック以外は対象外
+    if ( event.which !== 1 ){ return }
+    mouse_flag = true
+    const x = event.pageX 
+    const y = event.pageY 
+    let keyNum
+    switch ( event.type ){
+        case "mousedown":
+            keyNum = getKeyNum(x, y)
+            if ( keyNum !== null ){ pressPianoKey(keyNum) }
+            clickedKeyNum = keyNum
+            break
+        case "mouseup":
+            if ( clickedKeyNum !== null ){
+                keyNum = getKeyNum(x, y)
+                if ( keyNum !== null ){ releasePianoKey(keyNum) }
+                clickedKeyNum = null
+            }
+            break
+        case "mousemove":
+            keyNum = getKeyNum(x, y)
+            if ( keyNum !== null ){
+                // マウスポインタ位置が直前の鍵盤以外の鍵盤上の場合
+                if ( keyNum !== clickedKeyNum ){ 
+                    releasePianoKey(clickedKeyNum)
+                    pressPianoKey(keyNum) 
+                    clickedKeyNum = keyNum
+                }
+            } else {
+                // マウスポインタ位置が鍵盤外の場合
+                releasePianoKey(clickedKeyNum)
+                clickedKeyNum = null
+            }
+            break
+    }
+    mouse_flag = false;
 }
 
 //音符クリック時
@@ -259,8 +280,7 @@ function edit_note(abcKey){
     });
     input.value = innerText;
     input.setSelectionRange(interval_start, interval_end)
-    input.focus()
-    event.preventDefault(); //key入力無効
+    input.focus();
 }
 // 押した時の処理
 document.onkeydown = function(event) {
@@ -268,8 +288,7 @@ document.onkeydown = function(event) {
     // 鍵盤番号を取得
     const obj = keyMap.find( (item) => item.pcKey === event.key )
     if ( typeof obj !== "undefined" ){
-        // keyMapに含まれるキーの場合は後続処理実行
-        
+        // keyMapに含まれるキーの場合は後続処理実行 
         pressPianoKey(obj.pianoKey)
     } 
 
@@ -281,7 +300,7 @@ document.onkeyup = function(event) {
     const obj = keyMap.find( (item) => item.pcKey === event.key )
     if ( typeof obj !== "undefined" ){
         // keyMapに含まれるキーの場合は後続処理実行
-        releasePianoKey(obj.abcKey, obj.pianoKey)
+        releasePianoKey(obj.pianoKey)
     } 
 }
 
@@ -308,20 +327,30 @@ function pressPianoKey(keyNum){
     
     if ( !isKeyPressing[keyNum] ){
         // 鍵盤を離している場合のみ続行(長押しによる連打防止)
-        isKeyPressing[keyNum] = true
-        document.querySelector(`[data-key-num="${keyNum}"]`).classList.add("pressing")
-        soundPlay(keyNum)
+        
+        
+        if(keyNum < 30){
+            isKeyPressing[keyNum] = true
+            document.querySelector(`[data-key-num="${keyNum}"]`).classList.add("pressing")
+            soundPlay(keyNum)
+        }
+        if(!mouse_flag)
+            edit_note(keyMap[keyNum].abcKey);
+        
     }
+    
 }
 
 // ピアノ鍵盤をはなした時の処理
-function releasePianoKey(abcKey, keyNum){
-    if ( isKeyPressing[obj.keyNum] ){
+function releasePianoKey(keyNum){
+    if ( isKeyPressing[keyNum] ){
         // 鍵盤を押している場合のみ続行
-        isKeyPressing[keyNum] = false
-        document.querySelector(`[data-key-num="${keyNum}"]`).classList.remove("pressing")
-        soundStop(keyNum)
-        edit_note(abcKey)
+        
+        if(keyNum < 30){
+            isKeyPressing[keyNum] = false
+            document.querySelector(`[data-key-num="${keyNum}"]`).classList.remove("pressing")
+            soundStop(keyNum)
+        }
     }
 }
 
