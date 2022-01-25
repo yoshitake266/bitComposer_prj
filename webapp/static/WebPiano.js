@@ -266,6 +266,9 @@ function edit_note(abcKey){
     }
     else{
         context = abcKey + abc_leng[abc_leng_arnum] + ' '
+        if(note_list.length % 15 == 0){
+            context += '\n'
+        }
         note_list.push(new Note(context, abc_leng[abc_leng_arnum], note_list[index].get_e_pos))
         index++;
         sort_insert(index, note_list, note_list.length, context.length)
@@ -328,9 +331,9 @@ function pressPianoKey(keyNum){
     if ( !isKeyPressing[keyNum] ){
         // 鍵盤を離している場合のみ続行(長押しによる連打防止)
         
-        
+        isKeyPressing[keyNum] = true
         if(keyNum < 30){
-            isKeyPressing[keyNum] = true
+            
             document.querySelector(`[data-key-num="${keyNum}"]`).classList.add("pressing")
             soundPlay(keyNum)
         }
@@ -345,9 +348,9 @@ function pressPianoKey(keyNum){
 function releasePianoKey(keyNum){
     if ( isKeyPressing[keyNum] ){
         // 鍵盤を押している場合のみ続行
-        
+        isKeyPressing[keyNum] = false
         if(keyNum < 30){
-            isKeyPressing[keyNum] = false
+            
             document.querySelector(`[data-key-num="${keyNum}"]`).classList.remove("pressing")
             soundStop(keyNum)
         }
