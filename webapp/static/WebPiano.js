@@ -295,6 +295,10 @@ document.onkeydown = function(event) {
         pressPianoKey(obj.pianoKey)
     } 
 
+    if(event.code === "Space"){
+        edit_note(abc_rest);
+    }//休符の処理
+
 }
 
 // PCkey時の処理
@@ -305,6 +309,7 @@ document.onkeyup = function(event) {
         // keyMapに含まれるキーの場合は後続処理実行
         releasePianoKey(obj.pianoKey)
     } 
+
 }
 
 function but_leng(ele){//全符　2分符　4分符　8分符 の処理
@@ -319,10 +324,6 @@ function but_leng(ele){//全符　2分符　4分符　8分符 の処理
     }else if(ele.id == abc_id[4]){
         abc_leng_arnum = 4;
     }
-}
-
-function but_rest(){//休符の処理
-    edit_note(abc_rest)
 }
 
 // ピアノ鍵盤を押下した時の処理
