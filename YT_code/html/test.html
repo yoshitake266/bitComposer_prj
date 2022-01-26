@@ -3,9 +3,10 @@
     <head>
         <meta charset="utf-8">
         <script type= "text/javascript" src="js/abcjs-basic-min.js"></script>
+        <script type="text/javascript" src="js/class.js"></script>
     </head>
     <body>
-        <textarea  id="p"></textarea>
+        <textarea  id="p" readonly="readonly"></textarea>
         <div id="content"></div>
         <script type='text/javascript'>
             //"A,,", "^A,,", "B,,", "C,", "^C,", "D,", "^D,", "E,", "F,", "^F,", "G,",
@@ -47,126 +48,74 @@
 
             var interval_start = 0 //カーソル範囲のはじめ
             var interval_end = 0  //カーソル範囲の終わり
-            
-            var length = [0] // 入力文字の長さのリスト(intervalの保持)
             var context = ""
             var index = 0 
             var input = document.getElementById("p") //テキストボックス
+            var note_list = new Array()
+            note_list.push(new Note("", 0, 0));
 
-<<<<<<< Updated upstream
-            function edit_note(event){
-                if(obj.pianoKey > 29){
-                    if(index > 0){
-                    	length.pop()
-=======
             function sort_insert(index, list, li_len, text_length){
-            	console.log('--1')
             	for(i = li_len-1; i > index; i--){
-            		console.log(i)
             		obj = list[i-1];
 	            	list[i-1] = list[i];
 	            	list[i] = obj;
             		list[i].set_s_pos = list[i].get_s_pos + text_length;
             		list[i].set_e_pos = list[i].get_e_pos + text_length;
-            		console.log(list[i].get_s_pos)
-            		console.log(list[i].get_e_pos)
-            	}
-            	
-
+            	}            	
             }
             function sort_delete(index, list, text_length){
-                delete note_list[index]; 
+                
+                
                 for(i = index; i < list.length; i++){
-            		console.log(i)
             		list[i].set_s_pos = list[i].get_s_pos - text_length;
             		list[i].set_e_pos = list[i].get_e_pos - text_length;
-            		console.log(list[i].get_s_pos)
-            		console.log(list[i].get_e_pos)
             	}
+            	note_list.splice(index, 1)
+            	console.log(note_list)
             }
             function edit_note(obj){
                 
                 if(obj.pianoKey > 29){
                     if(index > 0){
                         sort_delete(index, note_list, note_list[index].get_note.length)
->>>>>>> Stashed changes
-                        interval_end = interval_start
-                        input.value = input.value.slice(0, interval_end) //テキスト文字の削減
-                        interval_start = interval_end - length[--index] //範囲の削減
-
-                        console.log("はじめ" + interval_start)
-                        console.log("終わり" + interval_end)
-                        input.setSelectionRange(interval_start, interval_end)
-                        input.focus()
+                        index--; //範囲の削減
+                        
                     }
                 }
                 else{
-                    console.log(event.key)
-                    index++
-                    context = 'A '
-                    if(event.key === "a"){
-                    	if(index % 15 === 0){
-                    		context +='\n'
-                    	}
-                        length.push(context.length)
-                    }
-                    else if(event.key === "b"){
-                    	if(index % 15 === 0){
-                    		context = 'A, \n'
-                    	}
-                    	else{
-                    		context = 'A, '
-                    	}
-                    	length.push(context.length)
-                    }
-                    input.value += context
-                    console.log(input.value)
-                    //テキスト文字の追加
-                    interval_start = interval_end
-                    interval_end = interval_start + length[index] //範囲の拡大
-
-<<<<<<< Updated upstream
-=======
-                    
+                	context = obj.abcKey + ' '
+                    note_list.push(new Note(context, 0, note_list[index].get_e_pos))
                     index++;
-                    console.log('--3')
-                    console.log(index);
                     sort_insert(index, note_list, note_list.length, context.length)
-                    
-                    //テキストを再配置
-                    innerText ="";
-                    note_list.forEach(element => {
-                        innerText += element.get_note;
-                    });
-                    input.value = innerText;
-                    input.setSelectionRange(interval_start, interval_end) // 範囲選択の設定
->>>>>>> Stashed changes
-                    input.focus()
-                    input.setSelectionRange(interval_start, interval_end) // 範囲選択の設定
+                    console.log(note_list)
                 }
+                interval_start = note_list[index].get_s_pos
+                interval_end = note_list[index].get_e_pos
+
+                innerText ="";
+                note_list.forEach(element => {
+                    innerText += element.get_note;
+                });
+                input.value = innerText;
+                input.setSelectionRange(interval_start, interval_end)
+                input.focus()
                 event.preventDefault(); //key入力無効
             }
             
             document.onkeydown = function(event){
                 const obj = keyMap.find((item) => item.pcKey == event.key)
                 if(typeof obj !== "undefined"){
-
+                	edit_note(obj)
                 }
                 
             }
-<<<<<<< Updated upstream
-=======
 
             document.onclick = function(event){
                 if(document.activeElement.id === "p"){
                     input.setSelectionRange //テキストボックスのカーソル位置を取得
-                    console.log('--4')
-                    console.log(input.selectionStart)
-                    console.log(input.selectionEnd)
+
                     for(i = 0; i < note_list.length; i++){
-                        console.log('--5')
-                        console.log('i = ' + note_list[i].get_s_pos)
-                        console.log('e = ' + note_list[i].get_e_pos)
+                        
                         if(note_list[i].get_s_pos === input.selectionStart
                         && note_list[i].get_e_pos >= input.selectionEnd){
                             index = i;
@@ -176,14 +125,9 @@
                     
                     interval_start = note_list[index].get_s_pos;
                     interval_end = note_list[index].get_e_pos;
-                    console.log('--6')
-                    console.log(index)
-                    console.log("はじめ" + interval_start)
-                	console.log("終わり" + interval_end)
+                    
                 }
             }
-            //送信ボタンを押したらclassから取り出す
->>>>>>> Stashed changes
             new ABCJS.Editor("p", {paper_id: "content"});
         </script>
     </body>
