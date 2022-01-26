@@ -265,10 +265,13 @@ function edit_note(abcKey){
         }
     }
     else{
-        context = abcKey + abc_leng[abc_leng_arnum] + ' '
         if(note_list.length % 15 == 0){
-            context += '\n'
+            context = abcKey + abc_leng[abc_leng_arnum] + '\n' + ' ';
         }
+        else{
+            context = abcKey + abc_leng[abc_leng_arnum] + ' '
+        }
+
         note_list.push(new Note(context, abc_leng[abc_leng_arnum], note_list[index].get_e_pos))
         index++;
         sort_insert(index, note_list, note_list.length, context.length)
@@ -339,7 +342,6 @@ function pressPianoKey(keyNum){
         }
         if(!mouse_flag)
             edit_note(keyMap[keyNum].abcKey);
-        
     }
     
 }
