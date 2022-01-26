@@ -74,10 +74,19 @@
 
 /*abc.jsのテキストボックス*/
 #input_notes {
-    position: absolute;
-    top: 400px;
-    left: 0px;
-    overflow: auto;
+    position: flex;
+    right:50%;
+    top:50%;
+    height:0.1px;
+    width:0.1px;
+}
+
+#container {
+    margin: 0 auto;
+    height: 10px;
+    width: calc(46px * 18);
+    justify-content: center;
+    overflow:scroll;
 }
 
 /*送信ボタン*/
