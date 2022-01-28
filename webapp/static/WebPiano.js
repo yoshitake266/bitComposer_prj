@@ -61,7 +61,7 @@ const keyMap = [
                 { pcKey: "[", pianoKey: 28 , abcKey: "^C'"},
                 { pcKey: ",", pianoKey: 29 , abcKey: "D'"},
                 { pcKey: "Delete", pianoKey: 30, abcKey: "Delete"},
-                { pcKey: "BackSpace", pianoKey: 31, abcKey: "Delete"}
+                { pcKey: "BackSpace", pianoKey: 31, abcKey: "Delete"},
             ]
 var interval_start = 0 //カーソル範囲のはじめ
 var interval_end = 0  //カーソル範囲の終わり
