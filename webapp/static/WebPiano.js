@@ -63,6 +63,7 @@ const keyMap = [
                 { pcKey: "Delete", pianoKey: 30, abcKey: "Delete"},
                 { pcKey: "Backspace", pianoKey: 31, abcKey: "Delete"},
             ]
+
 var interval_start = 0 //カーソル範囲のはじめ
 var interval_end = 0  //カーソル範囲の終わり
 var context = "" // noteの文字列
@@ -299,7 +300,6 @@ document.onkeydown = function(event) {
         if(obj.pianoKey < 30)
         	pressPianoKey(obj.pianoKey)
        	else{
-       		console.log(obj.abcKey)
        		edit_note(obj.abcKey)
        	}
        		
