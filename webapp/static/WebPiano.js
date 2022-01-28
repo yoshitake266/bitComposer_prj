@@ -61,7 +61,7 @@ const keyMap = [
                 { pcKey: "[", pianoKey: 28 , abcKey: "^C'"},
                 { pcKey: ",", pianoKey: 29 , abcKey: "D'"},
                 { pcKey: "Delete", pianoKey: 30, abcKey: "Delete"},
-                { pcKey: "BackSpace", pianoKey: 31, abcKey: "Delete"},
+                { pcKey: "Backspace", pianoKey: 31, abcKey: "Delete"},
             ]
 var interval_start = 0 //カーソル範囲のはじめ
 var interval_end = 0  //カーソル範囲の終わり
@@ -296,7 +296,13 @@ document.onkeydown = function(event) {
     const obj = keyMap.find( (item) => item.pcKey === event.key )
     if ( typeof obj !== "undefined" ){
         // keyMapに含まれるキーの場合は後続処理実行 
-        pressPianoKey(obj.pianoKey)
+        if(obj.pianoKey < 30)
+        	pressPianoKey(obj.pianoKey)
+       	else{
+       		console.log(obj.abcKey)
+       		edit_note(obj.abcKey)
+       	}
+       		
     } 
 
     if(event.code === "Space"){
@@ -337,11 +343,9 @@ function pressPianoKey(keyNum){
         // 鍵盤を離している場合のみ続行(長押しによる連打防止)
         
         isKeyPressing[keyNum] = true
-        if(keyNum < 30){
-            
-            document.querySelector(`[data-key-num="${keyNum}"]`).classList.add("pressing")
-            soundPlay(keyNum)
-        }
+        document.querySelector(`[data-key-num="${keyNum}"]`).classList.add("pressing")
+        soundPlay(keyNum)
+        
         if(!mouse_flag)
             edit_note(keyMap[keyNum].abcKey);
     }
@@ -353,11 +357,10 @@ function releasePianoKey(keyNum){
     if ( isKeyPressing[keyNum] ){
         // 鍵盤を押している場合のみ続行
         isKeyPressing[keyNum] = false
-        if(keyNum < 30){
-            
-            document.querySelector(`[data-key-num="${keyNum}"]`).classList.remove("pressing")
-            soundStop(keyNum)
-        }
+   
+        document.querySelector(`[data-key-num="${keyNum}"]`).classList.remove("pressing")
+        soundStop(keyNum)
+        
     }
 }
 
