@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, redirect
-import pycode.py as p
+
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-	return render_template('test.html')
+	return render_template('presen.html')
 
 @app.route('/j', methods=["GET", "POST"])
 def js_test():

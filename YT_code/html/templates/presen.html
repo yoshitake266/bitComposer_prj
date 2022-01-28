@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href= {{ url_for('static', filename='abcjs-audio.css')}}>
+        <!-- abc.jsを取り込む -->
+        <script type="text/javascript" src={{ url_for('static', filename='abcjs-basic-min.js')}}></script>
+    </head>
+    <body>
+        <h1>ABC.js</h1>
+        <!-- abc記法を入力するテキストボックス -->
+        <textarea  id="p"></textarea>
+        <div id="content"></div>
+        <div id="player"></div>
+        
+        <script type='text/javascript'>
+            function selectionCallback(abcelem) {
+                var note = {};
+                for (var key in abcelem) {
+                    if (abcelem.hasOwnProperty(key) && key !== "abselem")
+                        note[key] = abcelem[key];
+                }
+                console.log(abcelem);
+                var el = document.getElementById("p");
+                el.innerHTML = "<b>selectionCallback parameter:</b><br>" + JSON.stringify(note);
+	        }
+            //abc.jsの機能を宣言 テキストエリアのIDと楽譜を表示させる領域のIDを入力
+            ABCJS.midisoundfontUrl= "../static/default.sf2"
+            new ABCJS.Editor("p", {paper_id: "content",
+            synth: {
+				el: "#player",
+				options: { displayLoop: true, displayRestart: true, displayPlay: true, displayProgress: true, displayWarp: true }
+			},
+			abcjsParams: {
+				generateDownload: true,
+				clickListener: selectionCallback
+			}
+        })
+        </script>
+    </body>
+</html>
