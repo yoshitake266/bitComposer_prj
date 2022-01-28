@@ -58,6 +58,10 @@
     </div>
     <button type="submit" id='commit' class="btn btn-outline-primary btn-lg">送信</button>
     </form>
+    <div class="h2">
+        <p class="text-danger">※音符を消したいときはbackspaceを押してください</p>
+        <p class="text-danger">※休符を追加したいときはspaceを押してください</p>
+    </div>
     <p><a href="{{ url_for('welcome') }}" class="btn btn-outline-danger btn-lg">戻る</a></p>
     <script type='text/javascript'>
         new ABCJS.Editor('input_notes', { paper_id: "container"});
