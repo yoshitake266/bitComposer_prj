@@ -6,12 +6,12 @@
     
 {% block content %}
     <!--ロード前-->
-    <p><audio controls src={{ url_for('static', filename='/load.css')}}></p>
+    <p><audio controls src={{ url_for('static', filename='loader/load.css')}}></p>
 <body>
   
   <div id="loader-bg">
     <div id="loader">
-      <img src="/loader.gif" width="80" height="80"  />
+      <img src={{ url_for('static', filename= "loader/loader.gif")}} width="80" height="80"  />
     </div>
     <div id ="wrap">
       <!-- ロード後-->

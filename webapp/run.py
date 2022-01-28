@@ -3,6 +3,7 @@ import midi2mp3
 from datetime import datetime
 from bit_composer import parse_str_to_mid, abc_to_note
 from AI.prediction import predict
+import locale
 
 upload_folder = './uploads'
 app = Flask(__name__)
@@ -10,6 +11,7 @@ app.config['UPLOAD_FOLDER'] = upload_folder
 
 @app.route('/')
 def welcome():
+    locale.setlocale(locale.LC_CTYPE, "Japanese_Japan.932")
     ima = datetime.now()
     title = "ようこそ"
     page_t = "メインページ"
