@@ -3,6 +3,7 @@ import midi2mp3
 from datetime import datetime
 from bit_composer import parse_str_to_mid, abc_to_note
 from AI.prediction import predict
+import locale
 
 upload_folder = './uploads'
 app = Flask(__name__)
@@ -10,29 +11,18 @@ app.config['UPLOAD_FOLDER'] = upload_folder
 
 @app.route('/')
 def welcome():
+    #locale.setlocale(locale.LC_CTYPE, "Japanese_Japan.932")
     ima = datetime.now()
     title = "ようこそ"
     page_t = "メインページ"
     time = ima.strftime("%Y年%m月%d日")
     return render_template('index.html',title=title,page_title=page_t,time=time)
 
-@app.route('/midi',methods=["GET","POST"])
-def bcmidi():
-    title = "midi読み込み"
-    page_t = "midi読み込み"
-    return render_template('main/bcmidi.html',title=title,page_title=page_t)
-
 @app.route('/key',methods=["GET","POST"])
 def bckey():
     title = "キーボード打ち込み"
     page_t = "キーボード打ち込み"
     return render_template('main/bckey.html',title=title,page_title=page_t)
-
-@app.route('/str')
-def bcstr():
-    title = "文字列入力"
-    page_t = "文字列入力"
-    return render_template('main/bcstr.html',title=title,page_title=page_t)
 
 @app.route('/output')
 def outputmp3():

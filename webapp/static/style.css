@@ -74,14 +74,46 @@
 
 /*abc.jsのテキストボックス*/
 #input_notes {
-    position: absolute;
-    top: 400px;
-    left: 0px;
-    overflow: auto;
+    position: flex;
+    right:50%;
+    top:50%;
+    height:0.1px;
+    width:0.1px;
+}
+
+#container {
+    margin: 0 auto;
+    height: 10px;
+    width: calc(46px * 18);
+    justify-content: center;
+    overflow:scroll;
 }
 
 /*送信ボタン*/
 #commit {
     position: absolute;
     left: 1500px;
+}
+
+.bckey_title {
+    color: black;
+}
+
+.bckey_bg {
+    background-color: lightgray;
+}
+
+.base_title {
+    color: black;
+}
+
+.base_pic {
+    background: url("bg_note.png");
+    background-size: 50% 60%;
+    background-color: lightgray;
+}
+
+.base_bc_pic {
+    width: 500px;
+    height: 500px;
 }

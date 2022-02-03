@@ -8,8 +8,6 @@ def abc_to_note(str_note):
     new_note_length = []
     new_spl_note = []
     for note in abc_note:
-        print(note)
-        print('-----------')
         newnote = ""
         #休符
         if 'z' in note:
@@ -26,12 +24,10 @@ def abc_to_note(str_note):
                 newnote += '3'
             else:
                 newnote += '4'
-        #print(newnote)
         new_spl_note.append(newnote)
 
         #長さを格納
         if re.search('[0-9]', note):
-            print('OK')
             if '8' in note: #全音符
                 new_note_length.append(4.0)
             elif '4' in note: #2分
@@ -43,7 +39,6 @@ def abc_to_note(str_note):
         else:
             #8分
             new_note_length.append(0.5)
-        print(new_note_length)
     return new_spl_note, new_note_length
 
 def parse_str_to_mid(str_note,tempo):

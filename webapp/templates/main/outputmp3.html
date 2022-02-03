@@ -2,5 +2,12 @@
 
 {% block content %}
 <p><audio controls src={{ url_for('static', filename='media/out.mp3')}}></p>
-	<p><a href="{{ url_for('welcome') }}">戻る</a></p>
+<div>
+	<a href="../../static/media/out.mp3" download="out.mp3" class="btn btn-dark btn-lg">mp3をダウンロード</a>
+	<a href="../../static/media/out.mid" download="out.mid" class="btn btn-dark btn-lg">midiをダウンロード</a>
+	<a href="../../static/media/out.wav" download="out.wav" class="btn btn-dark btn-lg">wavをダウンロード</a></p>
+</div>
+
+<p><a href="{{ url_for('welcome') }}" class="text-decoration-none link-dark h3">戻る</a></p>
+
 {% endblock %}
