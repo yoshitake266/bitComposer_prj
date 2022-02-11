@@ -60,8 +60,6 @@ const keyMap = [
                 { pcKey: "m", pianoKey: 27 , abcKey: "C'"},
                 { pcKey: "[", pianoKey: 28 , abcKey: "^C'"},
                 { pcKey: ",", pianoKey: 29 , abcKey: "D'"},
-                { pcKey: "Delete", pianoKey: 30, abcKey: "Delete"},
-                { pcKey: "Backspace", pianoKey: 31, abcKey: "Delete"},
             ]
 
 var interval_start = 0 //カーソル範囲のはじめ
@@ -77,7 +75,13 @@ var mouse_flag = false;
 const abc_param = ["A,,", "^A,,", "B,,", "C,", "^C,", "D,", "^D,", "E,", "F,", "^F,", "G,", "^G,", "A,", "^A,", "B,", "C", "^C", "D", "^D", "E", "F", "^F", "G", "^G", "A", "^A", "B", "C'", "^C'", "D'"]
 const abc_leng = ["8","4","2","","1/2"] //音符の宣言
 const abc_rest = "z"                     //休符
-const abc_id = ["zen","2","4","8","16"]  //音符と休符の配列
+const abc_id = [
+                {id:"zen", pcKey:"1", arnum:0},
+                {id: "2", pcKey: "2", arnum:1},
+                {id: "4", pcKey: "3", arnum:2},
+                {id: "8", pcKey: "4", arnum:3},
+                {id: "16", pcKey: "5", arnum: 4},
+            ]  //音符と休符の配列
                                    
 const pianoSounds = []              // Audioオブジェクト        
 const touchkeyNumlish = []          // タッチ中の鍵盤番号リスト
@@ -260,24 +264,18 @@ function sort_delete(index, list, text_length){
 //テキストボックスの編集
 function edit_note(abcKey){
                 
-    if(abcKey === "Delete"){
-        if(index > 0){
-            sort_delete(index, note_list, note_list[index].get_note.length)
-            index--; //範囲の削減
-        }
+
+    if(note_list.length % 15 == 0){
+        context = abcKey + abc_leng[abc_leng_arnum] + '\n' + ' ';
     }
     else{
-        if(note_list.length % 15 == 0){
-            context = abcKey + abc_leng[abc_leng_arnum] + '\n' + ' ';
-        }
-        else{
-            context = abcKey + abc_leng[abc_leng_arnum] + ' '
-        }
-
-        note_list.push(new Note(context, abc_leng[abc_leng_arnum], note_list[index].get_e_pos))
-        index++;
-        sort_insert(index, note_list, note_list.length, context.length)
+        context = abcKey + abc_leng[abc_leng_arnum] + ' '
     }
+
+    note_list.push(new Note(context, abc_leng[abc_leng_arnum], note_list[index].get_e_pos))
+    index++;
+    sort_insert(index, note_list, note_list.length, context.length)
+    
 
     interval_start = note_list[index].get_s_pos
     interval_end = note_list[index].get_e_pos
@@ -292,18 +290,27 @@ function edit_note(abcKey){
 }
 // 押した時の処理
 document.onkeydown = function(event) {
-    
+    console.log(event.key)
     // 鍵盤番号を取得
     const obj = keyMap.find( (item) => item.pcKey === event.key )
     if ( typeof obj !== "undefined" ){
+        console.log(obj)
         // keyMapに含まれるキーの場合は後続処理実行 
-        if(obj.pianoKey < 30)
-        	pressPianoKey(obj.pianoKey)
-       	else{
-       		edit_note(obj.abcKey)
-       	}
-       		
+        pressPianoKey(obj.pianoKey)
     } 
+    else{
+        // キーボード入力で音符の長さの指定
+        obj = abc_id.find((item) => item.pcKey === event.Key)
+        if(typeof obj !== "undefined"){
+            abc_leng_arnum = obj.arnum
+        }
+    }
+    if(event.code === "Delete" || event.code === "Backspace"){
+        if(index > 0){
+            sort_delete(index, note_list, note_list[index].get_note.length)
+            index--; //範囲の削減
+        }
+    }
 
     if(event.code === "Space"){
         edit_note(abc_rest);
@@ -323,17 +330,9 @@ document.onkeyup = function(event) {
 }
 
 function but_leng(ele){//全符　2分符　4分符　8分符 の処理
-    if(ele.id == abc_id[0]){
-        abc_leng_arnum = 0;
-    }else if(ele.id == abc_id[1]){
-        abc_leng_arnum = 1;
-    }else if(ele.id == abc_id[2]){
-        abc_leng_arnum = 2;
-    }else if(ele.id == abc_id[3]){
-        abc_leng_arnum = 3;
-    }else if(ele.id == abc_id[4]){
-        abc_leng_arnum = 4;
-    }
+    const obj = abc_id.find((item) => item.id === ele)
+
+    abc_leng_arnum = obj.arnum
 }
 
 // ピアノ鍵盤を押下した時の処理
