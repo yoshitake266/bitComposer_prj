@@ -82,7 +82,7 @@ const abc_id = [
                 {id: "8", pcKey: "4", arnum:3},
                 {id: "16", pcKey: "5", arnum: 4},
             ]  //音符と休符の配列
-                                   
+var param = document.getElementById('param')
 const pianoSounds = []              // Audioオブジェクト        
 const touchkeyNumlish = []          // タッチ中の鍵盤番号リスト
 let clickedKeyNum = null            // クリック中の鍵盤番号リスト
@@ -290,19 +290,21 @@ function edit_note(abcKey){
 }
 // 押した時の処理
 document.onkeydown = function(event) {
-    console.log(event.key)
+
     // 鍵盤番号を取得
     const obj = keyMap.find( (item) => item.pcKey === event.key )
+    param.value += obj
     if ( typeof obj !== "undefined" ){
-        console.log(obj)
+        
         // keyMapに含まれるキーの場合は後続処理実行 
         pressPianoKey(obj.pianoKey)
     } 
     else{
         // キーボード入力で音符の長さの指定
-        obj = abc_id.find((item) => item.pcKey === event.Key)
-        if(typeof obj !== "undefined"){
-            abc_leng_arnum = obj.arnum
+        const obj2 = abc_id.find((item) => item.pcKey === event.Key)
+        console.log(obj2)
+        if(typeof obj2 !== "undefined"){
+            abc_leng_arnum = obj2.arnum
         }
     }
     if(event.code === "Delete" || event.code === "Backspace"){
