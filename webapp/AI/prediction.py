@@ -44,7 +44,6 @@ def predict(user_inputs_notes, user_inputs_note_length,bpm):
 	model2 = model_conf.create_length_model(duration_len, shape)
 	model2 = model_conf.model_load(model2, path + "checkpoint_length/cp.ckpt")
 	
-	music_length = 240 #生成する音の数
 	#ユーザからの入力
 	input_notes = [note_int[st] for st in user_inputs_notes]
 	#生成した音程のリスト
@@ -53,12 +52,15 @@ def predict(user_inputs_notes, user_inputs_note_length,bpm):
 	numerical_prediction_output_length = [length_int[nl] for nl in user_inputs_note_length]
 	input_length = numerical_prediction_output_length
 
-	#入力が10より少ないなら10音分の入力に補填
-	if len(input_notes) > 10:
-		input_notes = input_notes[-11:-1]
-		input_length = input_length[-11:-1]
-	elif len(input_notes) < 10:
-		for i in range(10 - len(input_notes)):
+	length_sum = sum(user_inputs_note_length)
+	music_length = length_sum + bpm #生成する音の数
+
+	#入力がshape[0]より少ないならshape[0]音分の入力に補填
+	if len(input_notes) > shape[0]:
+		input_notes = input_notes[-1*(1+shape[0]):-1]
+		input_length = input_length[-1*(1+shape[0]):-1]
+	elif len(input_notes) < shape[0]:
+		for i in range(shape[0] - len(input_notes)):
 			r = randint(0, n_len-1)
 			input_notes.append(note_int[int2note[r]])
 			r = randint(0, duration_len-1)
@@ -68,8 +70,8 @@ def predict(user_inputs_notes, user_inputs_note_length,bpm):
 	print(input_length)
 	for note_index in range(music_length):
 
-		prediction_input_note = np.reshape(input_notes, (1, 10, 1))
-		prediction_input_length = np.reshape(input_length, (1, 10, 1))
+		prediction_input_note = np.reshape(input_notes, (1, shape[0], 1))
+		prediction_input_length = np.reshape(input_length, (1, shape[0], 1))
 
 		#予測
 		prediction1 = model1.predict(prediction_input_note, verbose=0)
@@ -83,14 +85,14 @@ def predict(user_inputs_notes, user_inputs_note_length,bpm):
 
 		#次に入力する音
 		input_notes = np.append(input_notes, numerical_note)
-		#1音ずらして10音にする
-		input_notes = input_notes[1:11]
+		#1音ずらしてshape[0]音にする
+		input_notes = input_notes[1:shape[0]+1]
 		#音の長さ
 		input_length = np.append(input_length, numerical_length)
-		input_length = input_length[1:11]
+		input_length = input_length[1:shape[0]+1]
 
 	string_prediction_output = []
-	for i in range(music_length):
+	for i in range(len(numerical_prediction_output)):
 		#音程リストと長さのリストを格納
 		string_prediction_output.append([int2note[numerical_prediction_output[i]], int2length[numerical_prediction_output_length[i]]])
 
