@@ -68,7 +68,10 @@ def predict(user_inputs_notes, user_inputs_note_length,bpm):
 	print(input_notes)
 	print('-----------')
 	print(input_length)
-	for note_index in range(music_length):
+
+	music_length_now = length_sum
+
+	while music_length_now < music_length:
 
 		prediction_input_note = np.reshape(input_notes, (1, shape[0], 1))
 		prediction_input_length = np.reshape(input_length, (1, shape[0], 1))
@@ -85,6 +88,7 @@ def predict(user_inputs_notes, user_inputs_note_length,bpm):
 
 		#次に入力する音
 		input_notes = np.append(input_notes, numerical_note)
+
 		#1音ずらしてshape[0]音にする
 		input_notes = input_notes[1:shape[0]+1]
 		#音の長さ
