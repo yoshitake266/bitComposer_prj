@@ -60,8 +60,6 @@ const keyMap = [
                 { pcKey: "m", pianoKey: 27 , abcKey: "C'"},
                 { pcKey: "[", pianoKey: 28 , abcKey: "^C'"},
                 { pcKey: ",", pianoKey: 29 , abcKey: "D'"},
-                { pcKey: "Delete", pianoKey: 30, abcKey: "Delete"},
-                { pcKey: "Backspace", pianoKey: 31, abcKey: "Delete"},
             ]
 
 var interval_start = 0 //カーソル範囲のはじめ
@@ -76,9 +74,16 @@ var mouse_flag = false;
 //abc記法の配列
 const abc_param = ["A,,", "^A,,", "B,,", "C,", "^C,", "D,", "^D,", "E,", "F,", "^F,", "G,", "^G,", "A,", "^A,", "B,", "C", "^C", "D", "^D", "E", "F", "^F", "G", "^G", "A", "^A", "B", "C'", "^C'", "D'"]
 const abc_leng = ["8","4","2","","1/2"] //音符の宣言
+const abc_leng_param = [4, 2, 1, 0.5, 0.25]
 const abc_rest = "z"                     //休符
-const abc_id = ["zen","2","4","8","16"]  //音符と休符の配列
-                                   
+const abc_id = [
+                {id:"zen", pcKey:"1", arnum:0},
+                {id: "2", pcKey:"2", arnum:1},
+                {id: "4", pcKey:"3", arnum:2},
+                {id: "8", pcKey:"4", arnum:3},
+                {id: "16", pcKey:"5", arnum: 4},
+            ]  //音符と休符の配列
+var param = document.getElementById('param')
 const pianoSounds = []              // Audioオブジェクト        
 const touchkeyNumlish = []          // タッチ中の鍵盤番号リスト
 let clickedKeyNum = null            // クリック中の鍵盤番号リスト
@@ -92,6 +97,15 @@ const whiteKeys = document.querySelectorAll(".white-key")   // 白鍵
 const blackKeys = document.querySelectorAll(".black-key")   // 黒鍵
 // 初期処理
 const note = ["A2","Ahan2","B2","C3","Chan3","D3","Dhan3","E3","F3","Fhan3","G3","Ghan3","A3","Ahan3","B3","C4","Chan4","D4","Dhan4","E4","F4","Fhan4","G4","Ghan4","A4","Ahan4","B4","C5","Chan5","D5"]
+//音価button
+var button = document.getElementById("8")
+button.classList.add('b-pressing')
+
+//音価の合計(音符の入力制限用)
+length_limit = 0
+
+//音価の合計(textareaの改行用)
+sum = 0
 
 // Audioオブジェクトを作成セット
 for ( var no of note ){
@@ -267,24 +281,29 @@ function edit_note(abcKey){
         }
     }
     else{
-        if(note_list.length % 15 == 0){
+        //オブジェクトに入れる音価
+        abc_length = abc_leng_param[abc_leng_arnum]
+        sum += abc_length
+        if(sum >= 8){
             context = abcKey + abc_leng[abc_leng_arnum] + '\n' + ' ';
+            sum = 0
         }
         else{
             context = abcKey + abc_leng[abc_leng_arnum] + ' '
         }
-
-        note_list.push(new Note(context, abc_leng[abc_leng_arnum], note_list[index].get_e_pos))
+    
+        note_list.push(new Note(context, abc_length, note_list[index].get_e_pos))
         index++;
         sort_insert(index, note_list, note_list.length, context.length)
     }
-
     interval_start = note_list[index].get_s_pos
     interval_end = note_list[index].get_e_pos
 
     innerText ="";
+    length_limit = 0
     note_list.forEach(element => {
         innerText += element.get_note;
+        length_limit += element.get_duration
     });
     input.value = innerText;
     input.setSelectionRange(interval_start, interval_end)
@@ -295,15 +314,29 @@ document.onkeydown = function(event) {
     
     // 鍵盤番号を取得
     const obj = keyMap.find( (item) => item.pcKey === event.key )
+    
     if ( typeof obj !== "undefined" ){
+        console.log(obj)
         // keyMapに含まれるキーの場合は後続処理実行 
-        if(obj.pianoKey < 30)
-        	pressPianoKey(obj.pianoKey)
-       	else{
-       		edit_note(obj.abcKey)
-       	}
-       		
+        pressPianoKey(obj.pianoKey)
+        
     } 
+    else{
+        // キーボード入力で音符の長さの指定
+        const obj2 = abc_id.find((item) => item.pcKey === event.key)
+        
+        if(typeof obj2 !== "undefined"){
+            button.classList.remove('b-pressing')
+            console.log(button.classList)
+            button = document.getElementById(obj2.id)
+            button.classList.add('b-pressing')
+            abc_leng_arnum = obj2.arnum
+            console.log(button.classList)
+        }
+    }
+    if(event.key === "Delete" || event.key === "Backspace"){
+        edit_note("Delete")
+    }
 
     if(event.code === "Space"){
         edit_note(abc_rest);
@@ -323,17 +356,15 @@ document.onkeyup = function(event) {
 }
 
 function but_leng(ele){//全符　2分符　4分符　8分符 の処理
-    if(ele.id == abc_id[0]){
-        abc_leng_arnum = 0;
-    }else if(ele.id == abc_id[1]){
-        abc_leng_arnum = 1;
-    }else if(ele.id == abc_id[2]){
-        abc_leng_arnum = 2;
-    }else if(ele.id == abc_id[3]){
-        abc_leng_arnum = 3;
-    }else if(ele.id == abc_id[4]){
-        abc_leng_arnum = 4;
-    }
+    const obj = abc_id.find((item) => item.id === ele.id)
+    abc_leng_arnum = obj.arnum
+    //押下状態のスタイルの保持
+    
+    button.classList.remove('b-pressing')
+    console.log(button.classList)
+    button = document.getElementById(obj.id)
+    button.classList.add('b-pressing')
+    console.log(button.classList)
 }
 
 // ピアノ鍵盤を押下した時の処理
@@ -346,8 +377,10 @@ function pressPianoKey(keyNum){
         document.querySelector(`[data-key-num="${keyNum}"]`).classList.add("pressing")
         soundPlay(keyNum)
         
-        if(!mouse_flag)
-            edit_note(keyMap[keyNum].abcKey);
+        if(!mouse_flag){
+            if(length_limit < 60)
+                edit_note(keyMap[keyNum].abcKey);
+        }    
     }
     
 }

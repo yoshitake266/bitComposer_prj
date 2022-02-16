@@ -44,7 +44,7 @@ def predict(user_inputs_notes, user_inputs_note_length,bpm):
 	model2 = model_conf.create_length_model(duration_len, shape)
 	model2 = model_conf.model_load(model2, path + "checkpoint_length/cp.ckpt")
 	
-	music_length = 240 #生成する音の数
+	music_length = bpm #生成する音の数
 	#ユーザからの入力
 	input_notes = [note_int[st] for st in user_inputs_notes]
 	#生成した音程のリスト
@@ -54,11 +54,11 @@ def predict(user_inputs_notes, user_inputs_note_length,bpm):
 	input_length = numerical_prediction_output_length
 
 	#入力が10より少ないなら10音分の入力に補填
-	if len(input_notes) > 10:
-		input_notes = input_notes[-11:-1]
-		input_length = input_length[-11:-1]
-	elif len(input_notes) < 10:
-		for i in range(10 - len(input_notes)):
+	if len(input_notes) > shape[1]:
+		input_notes = input_notes[-1*shape[1]:-1]
+		input_length = input_length[-1*shape[1]:-1]
+	elif len(input_notes) < shape[1]:
+		for i in range(shape[1] - len(input_notes)):
 			r = randint(0, n_len-1)
 			input_notes.append(note_int[int2note[r]])
 			r = randint(0, duration_len-1)
@@ -68,8 +68,8 @@ def predict(user_inputs_notes, user_inputs_note_length,bpm):
 	print(input_length)
 	for note_index in range(music_length):
 
-		prediction_input_note = np.reshape(input_notes, (1, 10, 1))
-		prediction_input_length = np.reshape(input_length, (1, 10, 1))
+		prediction_input_note = np.reshape(input_notes, (1, shape[1], 1))
+		prediction_input_length = np.reshape(input_length, (1, shape[1], 1))
 
 		#予測
 		prediction1 = model1.predict(prediction_input_note, verbose=0)
@@ -84,10 +84,10 @@ def predict(user_inputs_notes, user_inputs_note_length,bpm):
 		#次に入力する音
 		input_notes = np.append(input_notes, numerical_note)
 		#1音ずらして10音にする
-		input_notes = input_notes[1:11]
+		input_notes = input_notes[1:shape[1]+1]
 		#音の長さ
 		input_length = np.append(input_length, numerical_length)
-		input_length = input_length[1:11]
+		input_length = input_length[1:shape[1]+1]
 
 	string_prediction_output = []
 	for i in range(music_length):
