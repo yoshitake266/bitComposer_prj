@@ -95,6 +95,8 @@ def predict(user_inputs_notes, user_inputs_note_length,bpm):
 		input_length = np.append(input_length, numerical_length)
 		input_length = input_length[1:shape[0]+1]
 
+		music_length_now += int2length[numerical_length]
+
 	string_prediction_output = []
 	for i in range(len(numerical_prediction_output)):
 		#音程リストと長さのリストを格納
