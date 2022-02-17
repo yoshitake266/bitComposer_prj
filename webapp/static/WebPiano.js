@@ -6,6 +6,7 @@ class Note{
         this.e_pos = s_pos + note.length; //カーソル範囲(終わり)
     }
     
+    //getter
     get get_note(){
         return this.note;
     }
@@ -19,6 +20,10 @@ class Note{
         return this.e_pos;
     }
     
+    //setter
+    set set_note(value){
+        this.note = value;
+    }
     set set_s_pos(value){
         this.s_pos = value;
     }
@@ -27,6 +32,30 @@ class Note{
     }
 }
 
+//bpm変更関数
+function bpm_change(event){
+    var val = event.currentTarget.value;
+    if (val > 99)
+        var context = 'Q:' + val.toString(10) + '\n';
+    else
+        var context = 'Q:' + val.toString(10) + ' \n';
+    
+    note_list[0].set_note = context;
+    innerText ="";
+    note_list.forEach(element => {
+        innerText += element.get_note;
+    });
+    input.value = innerText;
+    input.focus()
+}
+
+function arrange_note(){
+    var innerText ="";
+    for(i = 1; i < note_list.length; i++){
+        innerText += note_list[i].get_note
+    }
+    input.value = innerText;
+}
 // 変数宣言
 const path = "static/audio/"             // オーディオファイルのパス
 const keyMap = [
@@ -63,12 +92,12 @@ const keyMap = [
             ]
 
 var interval_start = 0 //カーソル範囲のはじめ
-var interval_end = 0  //カーソル範囲の終わり
+var interval_end = 6  //カーソル範囲の終わり
 var context = "" // noteの文字列
 var index = 0 //note_list参照用
 var input = document.getElementById("input_notes") //テキストボックス
 var note_list = new Array()
-note_list.push(new Note("", 0, 0));
+note_list.push(new Note("Q:100\n", 0, interval_start));
 var mouse_flag = false;
 
 //abc記法の配列
@@ -101,11 +130,9 @@ const note = ["A2","Ahan2","B2","C3","Chan3","D3","Dhan3","E3","F3","Fhan3","G3"
 var button = document.getElementById("8")
 button.classList.add('b-pressing')
 
-//音価の合計(音符の入力制限用)
-length_limit = 0
-
-//音価の合計(textareaの改行用)
-sum = 0
+//bpmを変更したときの処理
+var bpm = document.getElementById('bpm')
+bpm.addEventListener('change', bpm_change)
 
 // Audioオブジェクトを作成セット
 for ( var no of note ){
@@ -236,7 +263,7 @@ function handleMouseEvents(event){
 document.onclick = function(event){
     if(document.activeElement.id === "input_notes"){
         input.setSelectionRange //テキストボックスのカーソル位置を取得
-
+        
         for(i = 0; i < note_list.length; i++){
             if(note_list[i].get_s_pos === input.selectionStart
             && note_list[i].get_e_pos >= input.selectionEnd){
@@ -244,7 +271,6 @@ document.onclick = function(event){
                 break;
             }
         }
-        
         interval_start = note_list[index].get_s_pos;
         interval_end = note_list[index].get_e_pos;
         
@@ -283,10 +309,9 @@ function edit_note(abcKey){
     else{
         //オブジェクトに入れる音価
         abc_length = abc_leng_param[abc_leng_arnum]
-        sum += abc_length
-        if(sum >= 8){
+
+        if(note_list.length % 16 === 0){
             context = abcKey + abc_leng[abc_leng_arnum] + '\n' + ' ';
-            sum = 0
         }
         else{
             context = abcKey + abc_leng[abc_leng_arnum] + ' '
@@ -294,16 +319,15 @@ function edit_note(abcKey){
     
         note_list.push(new Note(context, abc_length, note_list[index].get_e_pos))
         index++;
+        console.log(note_list[index])
         sort_insert(index, note_list, note_list.length, context.length)
     }
     interval_start = note_list[index].get_s_pos
     interval_end = note_list[index].get_e_pos
 
     innerText ="";
-    length_limit = 0
     note_list.forEach(element => {
         innerText += element.get_note;
-        length_limit += element.get_duration
     });
     input.value = innerText;
     input.setSelectionRange(interval_start, interval_end)
@@ -316,31 +340,26 @@ document.onkeydown = function(event) {
     const obj = keyMap.find( (item) => item.pcKey === event.key )
     
     if ( typeof obj !== "undefined" ){
-        console.log(obj)
         // keyMapに含まれるキーの場合は後続処理実行 
         pressPianoKey(obj.pianoKey)
-        
-    } 
+    }
+    else if(event.key === "Delete" || event.key === "Backspace"){
+        edit_note("Delete")
+    }
+    else if(event.code === "Space"){
+        edit_note(abc_rest);//休符の処理
+    }
     else{
         // キーボード入力で音符の長さの指定
         const obj2 = abc_id.find((item) => item.pcKey === event.key)
         
         if(typeof obj2 !== "undefined"){
             button.classList.remove('b-pressing')
-            console.log(button.classList)
             button = document.getElementById(obj2.id)
             button.classList.add('b-pressing')
             abc_leng_arnum = obj2.arnum
-            console.log(button.classList)
         }
     }
-    if(event.key === "Delete" || event.key === "Backspace"){
-        edit_note("Delete")
-    }
-
-    if(event.code === "Space"){
-        edit_note(abc_rest);
-    }//休符の処理
 
 }
 
@@ -378,8 +397,7 @@ function pressPianoKey(keyNum){
         soundPlay(keyNum)
         
         if(!mouse_flag){
-            if(length_limit < 60)
-                edit_note(keyMap[keyNum].abcKey);
+            edit_note(keyMap[keyNum].abcKey);
         }    
     }
     
