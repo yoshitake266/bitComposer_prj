@@ -74,24 +74,24 @@
 
 /*abc.jsのテキストボックス*/
 #input_notes {
-    position: flex;
-    right:50%;
-    top:50%;
-    height:0.1px;
-    width:0.1px;
+    position: absolute;
 }
 
-#container {
-    margin: 0 auto;
-    height: 10px;
-    width: calc(46px * 18);
-    justify-content: center;
-    overflow:scroll;
+/*楽譜*/
+#container-wrap {
+	margin-left: 30%;
+	width: calc(100% - 40px);
+    height: 200px;
+    overflow: auto;
 }
 
+#audio{
+	width: calc(100% - 40px);
+	overflow: hidden;
+}
 /*送信ボタン*/
 #commit {
-    position: absolute;
+    position: fixed;
     left: 1500px;
 }
 
@@ -104,16 +104,11 @@
 }
 
 .base_title {
-    color: black;
+    color: orange;
 }
 
 .base_pic {
     background: url("bg_note.png");
     background-size: 50% 60%;
-    background-color: lightgray;
 }
 
-.base_bc_pic {
-    width: 500px;
-    height: 500px;
-}

@@ -5,15 +5,15 @@
 <head>
     <meta charset = 'utf-8'>
     <script type='text/javascript' src={{ url_for('static', filename='js/abcjs-basic-min.js')}}></script>
-    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+    <link rel="stylesheet" href={{ url_for('static', filename='css/abcjs-audio.css')}}>
 </head>
 <body>
 
     <form action="/key/syori" method="POST">
-        <div id="container-wrap">
-            <div id='container'></div>
-        </div>
-        <textarea id='input_notes' name="onpu" readonly="readonly" required></textarea>
+    <div id="container-wrap">
+        <div id='container'></div>
+    </div>
+        
     
     <div id="piano-container">
         <div id="piano-wrap">
@@ -47,17 +47,27 @@
             <div class="piano-key white-key" data-key-num="27"><span class="key-label">M</span></div><!-- ド M-->
             <div class="piano-key black-key" data-key-num="28"><span class="key-label">[</span></div><!-- ド# [-->
             <div class="piano-key white-key" data-key-num="29"><span class="key-label">,</span></div><!-- レ -->
+        
+            <textarea id='input_notes' name="onpu" readonly="readonly" required></textarea>
         </div>
+        <div id="audio">
+            <div class="abcs-inline-audio">
+                <button type="button" class="abcjs-midi-loopabcjs-btn">
+                </button>
+            </div>
+        </div>
+        
     </div>
+    
     <div class='duration_container'>
-        <input type="number" id="bpm" name='bpm' value="120" min="60" max="240">
+        <input type="number" id="bpm" name='bpm' value="100" min="60" max="240">
         <button type="button" id='zen' class="btn btn-dark" onclick="but_leng(this);">全</button>
         <button type="button" id='2' class="btn btn-dark" onclick="but_leng(this);">2分</button>
         <button type="button" id='4' class="btn btn-dark" onclick="but_leng(this);">4分</button>
         <button type="button" id='8' class="btn btn-dark" onclick="but_leng(this);">8分</button>
         <button type="button" id='16' class="btn btn-dark" onclick="but_leng(this);">16分</button>
     </div>
-    <button type="submit" id='commit' class="btn btn-outline-primary btn-lg">送信</button>
+    <button type="submit" id='commit' class="btn btn-outline-primary btn-lg" onclick="arrange_note()">送信</button>
     </form>
     <p class="h1 text-danger">パソコンのキーボードで音符を入力してください</p>
     <div class="h2">
@@ -65,9 +75,31 @@
         <p class="text-danger">※休符を追加したいときはspaceを押してください</p>
     </div>
     <p><a href="{{ url_for('welcome') }}" class="btn btn-outline-danger btn-lg">戻る</a></p>
-    <textarea id="param"></textarea>
     <script type='text/javascript'>
-        new ABCJS.Editor('input_notes', { paper_id: "container"});
+        function selectionCallback(abcelem){
+            var note = {};
+            for(var key in abcelem){
+                if(abcelem.hasOwnProperty(key) &&
+                key !== "abslem")
+                    note[key] = abcelem[key];
+            }
+        }
+        new ABCJS.Editor('input_notes', { paper_id: "container",
+            synth: {
+                el: "#audio",
+                options: { 
+                    displayloop: true,
+                    displayRestart: true,
+                    displayPlay: true,
+                    displayProgress: true,
+                    displayWarp: true,
+                }
+            },
+            abcjsParams: {
+                generateDownload: true,
+                clickListener: selectionCallback
+            }
+        });
     </script>
 </body>
     
