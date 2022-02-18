@@ -91,8 +91,7 @@
 }
 /*送信ボタン*/
 #commit {
-    position: fixed;
-    left: 1500px;
+    margin-left: 80%;
 }
 
 .bckey_title {

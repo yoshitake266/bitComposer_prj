@@ -23,7 +23,6 @@ def bckey():
     title = "キーボード打ち込み"
     page_t = "キーボード打ち込み"
     return render_template('main/bckey.html',title=title,page_title=page_t)
-
 @app.route('/output')
 def outputmp3():
     title = "mp3再生"
@@ -34,12 +33,12 @@ def outputmp3():
 def bckeysyori():
     if request.method == "POST":
         moji = request.form['onpu']
+        notes = moji
         bpm = request.form['bpm']
         int_bpm = int(bpm)
         notes,note_length = abc_to_note(moji)
         predict(notes, note_length,int_bpm)
         midi2mp3.output()
     return redirect(url_for("outputmp3"))
-
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=5000)
