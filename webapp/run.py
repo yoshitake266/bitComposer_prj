@@ -11,7 +11,7 @@ app.config['UPLOAD_FOLDER'] = upload_folder
 
 @app.route('/')
 def welcome():
-    locale.setlocale(locale.LC_CTYPE, "Japanese_Japan.932")
+    #locale.setlocale(locale.LC_CTYPE, "Japanese_Japan.932")
     ima = datetime.now()
     title = "ようこそ"
     page_t = "メインページ"
