@@ -30,7 +30,7 @@
 - tensorflow
 - pickle
 
-### Windowsの場合はFluidSynthとLilyPondをダウンロードして環境Pathを通す
+### Windowsの場合下記を参照
 - [Wiki: Pythonでmp3と楽譜の生成](https://github.com/yoshitake266/bitComposer_prj/wiki/Python%E3%81%A7mp3%E3%81%A8%E6%A5%BD%E8%AD%9C%E3%81%AE%E7%94%9F%E6%88%90)
 
 ## ApacheのインストールからFlask実行まで
