@@ -92,7 +92,7 @@ const keyMap = [
                 { pcKey: "m", pianoKey: 27 , abcKey: "C'"},
                 { pcKey: "[", pianoKey: 28 , abcKey: "^C'"},
                 { pcKey: ",", pianoKey: 29 , abcKey: "D'"},
-            ]
+            ] //入力ページのピアノと対応したJsonオブジェクト
 
 var interval_start = 0 //カーソル範囲のはじめ
 var interval_end = 6  //カーソル範囲の終わり
@@ -119,7 +119,7 @@ var param = document.getElementById('param')
 const pianoSounds = []              // Audioオブジェクト
 const touchkeyNumlish = []          // タッチ中の鍵盤番号リスト
 let clickedKeyNum = null            // クリック中の鍵盤番号リスト
-let abc_leng_arnum = 3              //
+let abc_leng_arnum = 3              // 音価配列のindex(初期値)
 const isKeyPressing = new Array(30) // ピアノ鍵盤ごとの押下状態
 isKeyPressing.fill(false)           // 初期値 = false
 const intervalIds = new Array(30)   // 各オーディオフェードアウトのインターバルID
