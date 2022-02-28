@@ -1,5 +1,5 @@
 ## ホームディレクトリのAI
-- sep_note_length
+- `sep_note_length`
   - `learning.py` : AIの学習
 
 ## 卒業プロジェクトのシステムのコードはwebappにあります
@@ -13,10 +13,10 @@
   - `style.css` : メロディ入力ページで使うcss
 
 - `templates`
-  - index.html : タイトルページ
-  - main
-    - bckey.html : メロディ入力ページ
-    - outputmp3.html : 結果出力ページ
+  - `index.html` : タイトルページ
+  - `main`
+    - `bckey.html` : メロディ入力ページ
+    - `outputmp3.html` : 結果出力ページ
     
 - `bit_composer.py` : abc記法からmusic21用データに変換
 
