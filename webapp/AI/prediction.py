@@ -69,17 +69,19 @@ def predict(user_inputs_notes, user_inputs_note_length,bpm):
 	print('-----------')
 	print(input_length)
 
+	# 音価の合計(曲の長さの制限用)
 	music_length_now = length_sum
 
 	while music_length_now < music_length:
 
+		# 入力の行列の形をモデルにそろえる
 		prediction_input_note = np.reshape(input_notes, (1, shape[0], 1))
 		prediction_input_length = np.reshape(input_length, (1, shape[0], 1))
 
 		#予測
 		prediction1 = model1.predict(prediction_input_note, verbose=0)
 		prediction2 = model2.predict(prediction_input_length, verbose=0)
-		#softmaxの出力から確立が最大の音を生成
+		#softmaxの出力から確率が最大の音を生成
 		numerical_note = np.argmax(prediction1)
 		numerical_prediction_output.append(numerical_note)
 
@@ -95,11 +97,12 @@ def predict(user_inputs_notes, user_inputs_note_length,bpm):
 		input_length = np.append(input_length, numerical_length)
 		input_length = input_length[1:shape[0]+1]
 
+		#予測した音の長さを足していく(1分の制限用)
 		music_length_now += int2length[numerical_length]
 
 	string_prediction_output = []
 	for i in range(len(numerical_prediction_output)):
-		#音程リストと長さのリストを格納
+		#予測した音程リストと長さのリストを格納
 		string_prediction_output.append([int2note[numerical_prediction_output[i]], int2length[numerical_prediction_output_length[i]]])
 
 	offset = 0.0 #音のタイミング
@@ -122,7 +125,7 @@ def predict(user_inputs_notes, user_inputs_note_length,bpm):
 			notes = []
 			for current_note in notes_in_chord:
 				new_note = note.Note(current_note)
-				new_note.storedInstrument = instrument.Piano()
+				new_note.storedInstrument = instrument.Piano() #音源をPianoにする
 				notes.append(new_note)
 			new_chord = chord.Chord(notes)
 			new_chord.duration.quarterLength = note_length
@@ -149,4 +152,6 @@ def predict(user_inputs_notes, user_inputs_note_length,bpm):
 	#midiの作成
 	midi_stream = stream.Stream(prediction_output)
 	midi_stream.write('midi', fp=path + '../static/media/out.mid')
+
+	#楽譜の生成
 	midi_stream.write('lily.png', fp=path + '../static/media/out')
