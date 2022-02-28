@@ -2,7 +2,7 @@
 - sep_note_length
   - `learning.py` : AIの学習
 
-## 卒業プロジェクトのコードはwebappにあります
+## 卒業プロジェクトのシステムのコードはwebappにあります
 
 ## webappの中身
 - `AI`
