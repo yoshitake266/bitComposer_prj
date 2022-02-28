@@ -1,0 +1,12 @@
+#box {
+    border:1px rgb(92, 15, 136) solid;
+    width:100px;
+    height:250px;
+    padding:5px;
+  }
+  button {
+    display:block;
+    padding:5px;
+    margin: 5px;
+    width:90%;
+  }
