@@ -64,20 +64,20 @@ appeared_note_length = sorted(set(music_length))
 duration_len = len(appeared_note_length)
 
 #パラメータをファイル保存 (predition.pyで使う)
-f = open('n_len.txt', 'wb')
+f = open('params/n_len.txt', 'wb')
 pickle.dump(n_len, f)
 
 #音程と数値の辞書型
 note_int = dict((note, n) for n, note in enumerate(appeared_notes))
-f = open('noteList.txt', 'wb')
+f = open('params/noteList.txt', 'wb')
 pickle.dump(note_int, f)
 
-f = open('duration_len.txt', 'wb')
+f = open('params/duration_len.txt', 'wb')
 pickle.dump(duration_len, f)
 
 #音価
 length_int = dict((length, n) for n, length in enumerate(appeared_note_length))
-f = open('lengthList.txt', 'wb')
+f = open('parmas/lengthList.txt', 'wb')
 pickle.dump(length_int, f)
 
 #数値のみのリスト
@@ -108,7 +108,7 @@ network_output_length = np_utils.to_categorical(network_output_length)
 
 #NNモデル構築のためshapeを保存
 input_shape = [network_input_notes.shape[1], network_input_notes.shape[2]]
-f = open('input_shape.txt', 'wb')
+f = open('params/input_shape.txt', 'wb')
 pickle.dump(input_shape, f)
 
 #NNモデルの構築

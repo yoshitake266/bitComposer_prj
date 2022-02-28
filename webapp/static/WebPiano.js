@@ -1,7 +1,7 @@
 class Note{
     constructor(note, duration, s_pos){
-        this.note = note;
-        this.duration = duration;
+        this.note = note; // 音程
+        this.duration = duration; // 音価
         this.s_pos = s_pos; //カーソル範囲(はじめ)
         this.e_pos = s_pos + note.length; //カーソル範囲(終わり)
     }
@@ -32,9 +32,11 @@ class Note{
     }
 }
 
-//bpm変更関数
+//bpmを変更した時
 function bpm_change(event){
     var val = event.currentTarget.value;
+
+    // abc記法のテキストボックスのヘッダを更新
     if (val > 99)
         var context = 'Q:' + val.toString(10) + '\n';
     else
@@ -49,6 +51,7 @@ function bpm_change(event){
     input.focus()
 }
 
+// POST送信の際のデータの変換
 function arrange_note(){
     var innerText ="";
     for(i = 1; i < note_list.length; i++){
@@ -96,8 +99,8 @@ var interval_end = 6  //カーソル範囲の終わり
 var context = "" // noteの文字列
 var index = 0 //note_list参照用
 var input = document.getElementById("input_notes") //テキストボックス
-var note_list = new Array()
-note_list.push(new Note("Q:100\n", 0, interval_start));
+var note_list = new Array() // 入力メロディの情報
+note_list.push(new Note("Q:100\n", 0, interval_start)); //abc記法のヘッダ
 var mouse_flag = false;
 
 //abc記法の配列
@@ -113,14 +116,14 @@ const abc_id = [
                 {id: "16", pcKey:"5", arnum: 4},
             ]  //音符と休符の配列
 var param = document.getElementById('param')
-const pianoSounds = []              // Audioオブジェクト        
+const pianoSounds = []              // Audioオブジェクト
 const touchkeyNumlish = []          // タッチ中の鍵盤番号リスト
 let clickedKeyNum = null            // クリック中の鍵盤番号リスト
 let abc_leng_arnum = 3              //
 const isKeyPressing = new Array(30) // ピアノ鍵盤ごとの押下状態
-isKeyPressing.fill(false)           // 初期値 = false            
+isKeyPressing.fill(false)           // 初期値 = false
 const intervalIds = new Array(30)   // 各オーディオフェードアウトのインターバルID
-intervalIds.fill(null)              // 初期値 = null           
+intervalIds.fill(null)              // 初期値 = null
 const pianoWrap = document.getElementById("piano-wrap")     // 鍵盤全体
 const whiteKeys = document.querySelectorAll(".white-key")   // 白鍵
 const blackKeys = document.querySelectorAll(".black-key")   // 黒鍵
@@ -303,7 +306,7 @@ function edit_note(abcKey){
     if(abcKey === "Delete"){
         if(index > 0){
             sort_delete(index, note_list, note_list[index].get_note.length)
-            index--; //範囲の削減
+            index--; //範囲を左に
         }
     }
     else{
@@ -318,8 +321,7 @@ function edit_note(abcKey){
         }
     
         note_list.push(new Note(context, abc_length, note_list[index].get_e_pos))
-        index++;
-        console.log(note_list[index])
+        index++; // 範囲を右に
         sort_insert(index, note_list, note_list.length, context.length)
     }
     interval_start = note_list[index].get_s_pos
@@ -378,12 +380,9 @@ function but_leng(ele){//全符　2分符　4分符　8分符 の処理
     const obj = abc_id.find((item) => item.id === ele.id)
     abc_leng_arnum = obj.arnum
     //押下状態のスタイルの保持
-    
     button.classList.remove('b-pressing')
-    console.log(button.classList)
     button = document.getElementById(obj.id)
     button.classList.add('b-pressing')
-    console.log(button.classList)
 }
 
 // ピアノ鍵盤を押下した時の処理

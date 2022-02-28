@@ -40,19 +40,3 @@ def abc_to_note(str_note):
             #8分
             new_note_length.append(0.5)
     return new_spl_note, new_note_length
-
-def parse_str_to_mid(str_note,tempo):
-
-    new_spl_note = abc_to_note(str_note)
-    NoteList = []
-    offset = 0.5
-    for i in new_spl_note:
-        mid_note = note.Note(i,quarterLength = 1)
-        mid_note.offset = offset
-        mid_note.storedInstrument = instrument.Piano()
-        NoteList.append(mid_note)
-        offset += 0.5
-    Strmidi = stream.Stream(NoteList)
-    mm = tempo.MetronomeMark(number=tempo)
-    Strmidi.append(mm)
-    Strmidi.write('midi', fp=r'static\media\out.mid')
