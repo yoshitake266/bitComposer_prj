@@ -5,22 +5,22 @@ import pickle
 import model_conf
 from fractions import Fraction
 
-f = open('noteList.txt', 'rb')
+f = open('params/noteList.txt', 'rb')
 note_int = pickle.load(f)
 
 int2note = dict((val, key) for key,val in note_int.items())
 
-f = open('n_len.txt', 'rb')
+f = open('params/n_len.txt', 'rb')
 n_len = pickle.load(f)
 
-f = open('lengthList.txt', 'rb')
+f = open('params/lengthList.txt', 'rb')
 length_int = pickle.load(f)
 int2length = dict((val, key) for key,val in length_int.items())
 
-f = open('duration_len.txt', 'rb')
+f = open('params/duration_len.txt', 'rb')
 duration_len = pickle.load(f)
 
-f = open('input_shape.txt', 'rb')
+f = open('params/input_shape.txt', 'rb')
 shape = pickle.load(f)
 
 model1 = model_conf.create_note_model(n_len, shape)
@@ -116,4 +116,4 @@ for string_note in string_prediction_output:
 print(prediction_output)
 
 midi_stream = stream.Stream(prediction_output)
-midi_stream.write('midi', fp='./test_output.mid')
+midi_stream.write('midi', fp='output/test_output.mid')
