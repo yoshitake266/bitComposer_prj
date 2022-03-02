@@ -1,7 +1,7 @@
 from flask import Flask,render_template, request, redirect,send_from_directory,redirect,url_for
 import midi2mp3
 from datetime import datetime
-from bit_composer import parse_str_to_mid, abc_to_note
+from bit_composer import abc_to_note
 from AI.prediction import predict
 import locale
 
