@@ -37,3 +37,6 @@
 - [Wiki: Ubuntu環境のApacheサーバでFlaskを実行](https://github.com/yoshitake266/bitComposer_prj/wiki/Ubuntu%E7%92%B0%E5%A2%83%E3%81%AEApache%E3%82%B5%E3%83%BC%E3%83%90%E3%81%A7Flask%E3%82%92%E5%AE%9F%E8%A1%8C)
 
 ### 上記の作業が面倒という人はrun.pyをpythonで実行
+
+#### to 先生
+- file_infomation.mdを見てください
