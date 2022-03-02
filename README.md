@@ -21,7 +21,7 @@
 # 環境構築 (Ubuntu・Windows)
 
 ## Pythonのインストール
-- Python ver3.9.6
+- Python ver3.8 以上
 
 ## Pythonライブラリのインストール(pip)
 - flask
