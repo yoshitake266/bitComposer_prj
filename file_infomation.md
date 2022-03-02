@@ -1,3 +1,5 @@
+# 卒業制作のコード
+
 ## ホームディレクトリのAI
 - `sep_note_length`
   - `learning.py` : AIの学習
