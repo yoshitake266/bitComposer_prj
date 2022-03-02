@@ -18,7 +18,7 @@
 自動作曲はRNN(Recurrent Neural Network)を使っています。
 ![キャプチャ](https://user-images.githubusercontent.com/43458963/143048883-7ccfc8c7-33bf-4be4-9133-b6e54f8e240f.PNG)
 
-# 環境構築 (Ubuntu)
+# 環境構築 (Ubuntu・Windows)
 
 ## Pythonのインストール
 - Python ver3.9.6
