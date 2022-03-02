@@ -1,3 +1,4 @@
+
 class Note{
     constructor(note, duration, s_pos){
         this.note = note; // 音程
